@@ -35,7 +35,7 @@ public class UserService {
 
     //회원가입
     @Transactional
-    public Long join(UserDto userDto) throws Exception {
+    public boolean join(UserDto userDto) throws Exception {
         log.info("UserService : join1");
         if(validateDuplicateUser(userDto)){
             throw new IllegalStateException("이미 존재하는 회원입니다.");
@@ -51,7 +51,15 @@ public class UserService {
         user.setAuthenticationKey(authenticationKey);
         user.setRoleType(RoleType.ASSOCIATE);
         userRepository.save(user);
-        return user.getId();
+        return true;
+    }
+
+    //로그인
+    public User login(String loginId , String password){
+
+        return userRepository.findByLoginId(loginId)
+                .filter(m -> m.getPassword().equals(password))
+                .orElse(null);
     }
 
     //회원가입시 보낼 메세지 작성

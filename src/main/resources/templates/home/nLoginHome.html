@@ -1,18 +1,8 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Funding Project</title>
-
-    <!-- 합쳐지고 최소화된 최신 CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
-    <!-- 부가적인 테마 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
-    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
+    <head th:replace="fragments/header :: header" />
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -25,13 +15,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">MoaMoa</a>
+            <a class="navbar-brand" href="/" style="font-size: 20px">MoaMoa</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/">Home</a></li>
+                <li><a href="/admin">Admin</a></li>
                 <li><a href="/funding">Restaurant</a></li>
                 <li><a href="/faq">FAQ</a></li>
                 <li><a href="/login">Login</a></li>
@@ -41,6 +32,21 @@
 </nav>
 </body>
 
+<!-- Adding Styles-->
+<style>
+    li{
+        font-size: 20px;
+    }
+    .navbar{
+        min-height: 50px;
+    }
+
+    #wrapper{
+        min-height: 100%;
+        margin-bottom: -60px;
+    }
+
+</style>
 
 
 </html>

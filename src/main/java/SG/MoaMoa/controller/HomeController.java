@@ -2,7 +2,6 @@ package SG.MoaMoa.controller;
 
 import SG.MoaMoa.domain.User;
 import SG.MoaMoa.web.argumentresolver.Login;
-import lombok.Getter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +14,9 @@ public class HomeController {
             @Login User loginUser , Model model
     ){
         if(loginUser == null){
-            return "loginHome";
+            return "home/nloginHome";
         }
-
-        return "loginHome";
+        return "home/loginHome";
     }
 
 }

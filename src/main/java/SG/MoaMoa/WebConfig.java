@@ -13,6 +13,7 @@ import java.util.List;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginCheckInterceptor())
@@ -20,7 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns(
                         "/", "/login", "/logout", "/find/id" , "/find/password" ,
-                        "/css/**", "/*.ico", "/error", "/join"
+                         "/*.ico", "/error", "/join" , "/bootstrap/**"
                 );
     }
 
@@ -28,4 +29,6 @@ public class WebConfig implements WebMvcConfigurer {
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new LoginMemberArgumentResolver());
     }
+
+
 }
