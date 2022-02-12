@@ -125,12 +125,90 @@ public class InitDb {
                     .fundingStatus(FundingStatus.PROCEEDING)
                     .build();
 
+            Funding funding7 = Funding.builder()
+                    .minFundingCount(10)
+                    .maxFundingCount(50)
+                    .nowFundingCount(0)
+                    .price(150000)
+                    .discountPrice(17000)
+                    .menu("돈까스")
+                    .restaurantName("이케이큐")
+                    .startDate(LocalDateTime.now())
+                    .endDate(LocalDateTime.now().plusSeconds(20))
+                    .introduction("asd")
+                    .information("zxc")
+                    .notice("qwe")
+                    .fundingStatus(FundingStatus.PROCEEDING)
+                    .build();
+
+            Funding funding8 = Funding.builder()
+                    .minFundingCount(10)
+                    .maxFundingCount(50)
+                    .nowFundingCount(0)
+                    .price(150000)
+                    .discountPrice(12000)
+                    .menu("돈까스")
+                    .restaurantName("예시연")
+                    .startDate(LocalDateTime.now())
+                    .endDate(LocalDateTime.now().plusSeconds(20))
+                    .introduction("asd")
+                    .information("zxc")
+                    .notice("qwe")
+                    .fundingStatus(FundingStatus.PROCEEDING)
+                    .build();
+
+            Funding ex1 = Funding.builder()
+                    .restaurantName("ex1")
+                    .discountPrice(5000)
+                    .build();
+
+            Funding ex2 = Funding.builder()
+                    .restaurantName("ex2")
+                    .discountPrice(5000)
+                    .build();
+
+            Funding ex3 = Funding.builder()
+                    .restaurantName("ex3")
+                    .discountPrice(5000)
+                    .build();
+
+            Funding ex4 = Funding.builder()
+                    .restaurantName("ex4")
+                    .discountPrice(5000)
+                    .build();
+
+            Funding ex5 = Funding.builder()
+                    .restaurantName("ex5")
+                    .discountPrice(5000)
+                    .build();
+
+            Funding ex6 = Funding.builder()
+                    .restaurantName("ex6")
+                    .discountPrice(5000)
+                    .build();
+
+            Funding ex7 = Funding.builder()
+                    .restaurantName("ex7")
+                    .discountPrice(5000)
+                    .build();
+
+            Funding ex8 = Funding.builder()
+                    .restaurantName("ex8")
+                    .discountPrice(5000)
+                    .build();
+
+            Funding ex9 = Funding.builder()
+                    .restaurantName("ex9")
+                    .discountPrice(5000)
+                    .build();
+
+
             User user1 = User.builder()
                     .name("A")
                     .loginId("qwe")
                     .password("123")
                     .email("qwe@naver.com")
-                    .roleType(RoleType.REGULAR)
+                    .roleType(RoleType.ADMIN)
                     .build();
 
             User user2 = User.builder()
@@ -158,6 +236,17 @@ public class InitDb {
             em.persist(funding4);
             em.persist(funding5);
             em.persist(funding6);
+            em.persist(funding7);
+            em.persist(funding8);
+            em.persist(ex1);
+            em.persist(ex2);
+            em.persist(ex3);
+            em.persist(ex4);
+            em.persist(ex5);
+            em.persist(ex6);
+            em.persist(ex7);
+            em.persist(ex8);
+            em.persist(ex9);
 
         }
 

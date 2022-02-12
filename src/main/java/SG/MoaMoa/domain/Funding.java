@@ -5,6 +5,7 @@ import SG.MoaMoa.dto.FundingDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -88,6 +89,11 @@ public class Funding {
     public void addUserFunding(UserFunding userFunding){
         this.userFundings.add(userFunding);
         userFunding.setFunding(this);
+    }
+
+    public void addImage(Image image){
+        this.imageList.add(image);
+        image.setFunding(this);
     }
 
     /*

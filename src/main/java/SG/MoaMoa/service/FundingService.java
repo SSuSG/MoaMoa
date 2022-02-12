@@ -2,11 +2,13 @@ package SG.MoaMoa.service;
 
 
 import SG.MoaMoa.domain.Funding;
+import SG.MoaMoa.domain.Image;
 import SG.MoaMoa.domain.User;
 import SG.MoaMoa.domain.UserFunding;
 import SG.MoaMoa.dto.FundingDto;
 import SG.MoaMoa.dto.PageRequestDto;
 import SG.MoaMoa.repository.FundingRepository;
+import SG.MoaMoa.repository.ImageRepository;
 import SG.MoaMoa.repository.UserFundingRepository;
 import SG.MoaMoa.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,13 +35,21 @@ public class FundingService {
     private final FundingRepository fundingRepository;
     private final UserFundingRepository userFundingRepository;
     private final UserRepository userRepository;
+    private final ImageService imageService;
+    private final ImageRepository imageRepository;
     private final CouponService couponService;
 
 
     //새로운 펀딩 만들기
     @Transactional
-    public void createFunding(FundingDto fundingDto){
+    public void createFunding(FundingDto fundingDto) throws IOException {
+        //이미지 저장
+        List<Image> images = imageService.storeImages(fundingDto.getImageFiles());
+
         Funding funding = fundingDto.toEntityFirst();
+        for (Image image : images) {
+            funding.addImage(image);
+        }
         fundingRepository.save(funding);
     }
 
@@ -57,7 +68,6 @@ public class FundingService {
 
     public Page<FundingDto> getFundings(Pageable pageable){
         return fundingRepository.findAll( pageable).map(f -> f.toDto());
-
     }
 
 

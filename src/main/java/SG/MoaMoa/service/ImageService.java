@@ -12,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -29,9 +31,24 @@ public class ImageService {
         return imageDir + imageName;
     }
 
+    //이미지 여러개를 실제로 저장
+    public List<Image> storeImages(List<MultipartFile> multipartFiles) throws IOException {
+        List<Image> storeImageResult = new ArrayList<>();
+        for (MultipartFile multipartFile : multipartFiles) {
+            if (!multipartFile.isEmpty()){
+                storeImageResult.add(storeImage(multipartFile));
+            }
+        }
+        return storeImageResult;
+    }
+
+
     //이미지 하나를 실제로 저장하고 Image객체로 바꾸어 저장
     public Image storeImage(MultipartFile multipartFile) throws IOException
     {
+        if(multipartFile.isEmpty())
+            return null;
+
         log.info("ImageService : storeImage");
         String originalImageName = multipartFile.getOriginalFilename();
         String storeImageName = createStoreFileName(originalImageName);

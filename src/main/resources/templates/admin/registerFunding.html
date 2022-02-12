@@ -1,10 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <head th:replace="fragments/header :: header" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            min-height: 100vh;
+
+            background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
+            background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+            background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+            background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+            background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
+        }
+
+        .input-form {
+            max-width: 680px;
+
+            margin-top: 80px;
+            padding: 32px;
+
+            background: #fff;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+        }
+    </style>
 </head>
 <body>
+<div th:replace="fragments/bodyHeader :: bodyHeader"/>
+
+<div class="container">
+    <div class="input-form-backgroud row">
+        <div class="input-form col-md-12 mx-auto">
+            <h4 class="mb-3">펀딩등록</h4>
+            <form class="validation-form" novalidate th:action th:object="${fundingDto}" method="post" enctype="multipart/form-data">
+
+                <div class="mb-3">
+                    <label for="restaurantName">가게이름</label>
+                    <input type="text" class="form-control" id="restaurantName" placeholder="restaurantName" th:field="*{restaurantName}" th:errorclass="field-error" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="menu">메뉴</label>
+                    <input type="text" class="form-control" id="menu" placeholder="menu" th:field="*{menu}" th:errorclass="field-error" required>
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="information">가게정보</label>
+                    <input type="text" class="form-control" id="information" placeholder="information" th:field="*{information}" th:errorclass="field-error" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="introduction">가게소개</label>
+                    <input type="text" class="form-control" id="introduction" placeholder="introduction" th:field="*{introduction}" th:errorclass="field-error" required>
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="notice">가게 공지사항</label>
+                    <input type="text" class="form-control" id="notice" placeholder="notice" th:field="*{notice}" th:errorclass="field-error" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="discountPrice">할인가격</label>
+                    <input type="text" class="form-control" id="discountPrice" placeholder="discountPrice" th:field="*{discountPrice}" th:errorclass="field-error" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="price">가격</label>
+                    <input type="text" class="form-control" id="price" placeholder="price" th:field="*{price}" th:errorclass="field-error" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="minFundingCount">최소펀딩수</label>
+                    <input type="text" class="form-control" id="minFundingCount" placeholder="minFundingCount" th:field="*{minFundingCount}" th:errorclass="field-error" required>
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="maxFundingCount">최대펀딩수</label>
+                    <input type="text" class="form-control" id="maxFundingCount" placeholder="maxFundingCount" th:field="*{maxFundingCount}" th:errorclass="field-error" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="startDate">펀딩 시작 날짜</label>
+                    <input type="datetime-local" class="form-control" id="startDate" placeholder="startDate" th:field="*{startDate}" th:errorclass="field-error" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="endDate">펀딩 종료 날짜</label>
+                    <input type="datetime-local" class="form-control" id="endDate" placeholder="endDate" th:field="*{endDate}" th:errorclass="field-error" required>
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="imageFiles">이미지</label>
+                    <input type="file" class="form-control" id="imageFiles" placeholder="imageFiles" multiple="multiple" th:field="*{imageFiles}" th:errorclass="field-error" required>
+                </div>
+
+                <button class="btn btn-primary btn-lg btn-block" type="submit">펀딩 등록</button>
+            </form>
+        </div>
+    </div>
+    <footer class="my-3 text-center text-small">
+        <p class="mb-1">&copy; 2022 SG</p>
+    </footer>
+</div>
 
 </body>
 </html>

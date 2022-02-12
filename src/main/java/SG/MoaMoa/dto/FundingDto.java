@@ -6,10 +6,14 @@ import SG.MoaMoa.domain.FundingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
@@ -22,16 +26,20 @@ public class FundingDto {
     private String information;
     private String introduction;
     private String notice;
-    private int discountPrice;
-    private int price;
-    private int minFundingCount;
-    private int maxFundingCount;
-    private int nowFundingCount;
+    private Integer discountPrice;
+    private Integer price;
+    private Integer minFundingCount;
+    private Integer maxFundingCount;
+    private Integer nowFundingCount;
+    private List<MultipartFile> imageFiles;
 
     @Enumerated(EnumType.STRING)
     private FundingStatus fundingStatus;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime startDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime endDate;
 
     public Funding toEntityFirst(){
@@ -43,6 +51,8 @@ public class FundingDto {
                 .information(information)
                 .introduction(introduction)
                 .notice(notice)
+                .imageList(new ArrayList<>())
+                .userFundings(new ArrayList<>())
                 .maxFundingCount(maxFundingCount)
                 .minFundingCount(minFundingCount)
                 .nowFundingCount(0)
