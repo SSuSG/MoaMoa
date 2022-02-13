@@ -6,15 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-        body {
-            min-height: 100vh;
 
-            background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
-            background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-            background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-            background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-            background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
-        }
 
         .input-form {
             max-width: 680px;
@@ -101,6 +93,11 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="mainImage">메인 이미지</label>
+                    <input type="file" class="form-control" id="mainImage" placeholder="mainImage" multiple="multiple" th:field="*{mainImage}" th:errorclass="field-error" required>
+                </div>
+
+                <div class="mb-3">
                     <label for="imageFiles">이미지</label>
                     <input type="file" class="form-control" id="imageFiles" placeholder="imageFiles" multiple="multiple" th:field="*{imageFiles}" th:errorclass="field-error" required>
                 </div>
@@ -109,10 +106,12 @@
             </form>
         </div>
     </div>
-    <footer class="my-3 text-center text-small">
-        <p class="mb-1">&copy; 2022 SG</p>
-    </footer>
 </div>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+</footer>
+</body>
 
 </body>
 </html>

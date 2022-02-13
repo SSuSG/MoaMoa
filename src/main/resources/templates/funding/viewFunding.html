@@ -4,10 +4,17 @@
   <head th:replace="fragments/header :: header" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
 </head>
 <body>
 <div th:replace="fragments/bodyHeader :: bodyHeader"/>
 
+<div class="slide">
+  <th:block th:each="image : ${funding.getImageList()}">
+    <img th:src = "|/images/${image.getStoreImageName()}|" alt = "사진 준비중" width = "auto", height = "350">
+  </th:block>
+</div>
 
 </body>
 </html>

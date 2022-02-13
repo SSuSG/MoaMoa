@@ -6,6 +6,7 @@ import SG.MoaMoa.domain.Image;
 import SG.MoaMoa.domain.User;
 import SG.MoaMoa.domain.UserFunding;
 import SG.MoaMoa.dto.FundingDto;
+import SG.MoaMoa.dto.MainViewFundingDto;
 import SG.MoaMoa.dto.PageRequestDto;
 import SG.MoaMoa.repository.FundingRepository;
 import SG.MoaMoa.repository.ImageRepository;
@@ -43,10 +44,16 @@ public class FundingService {
     //새로운 펀딩 만들기
     @Transactional
     public void createFunding(FundingDto fundingDto) throws IOException {
+        //메인 이미지 저장
+        Image mainImage = imageService.storeImage(fundingDto.getMainImage(),true);
+
         //이미지 저장
         List<Image> images = imageService.storeImages(fundingDto.getImageFiles());
 
         Funding funding = fundingDto.toEntityFirst();
+
+        //연관관계 저장
+        funding.addImage(mainImage);
         for (Image image : images) {
             funding.addImage(image);
         }
@@ -66,8 +73,10 @@ public class FundingService {
         return fundingRepository.findAllCustom(pageable).map(funding -> funding.toDto());
     }
 
-    public Page<FundingDto> getFundings(Pageable pageable){
-        return fundingRepository.findAll( pageable).map(f -> f.toDto());
+    //펀딩리스트들 넘겨주기
+    public Page<MainViewFundingDto> getFundings(Pageable pageable){
+        return fundingRepository.findAll(pageable).map(f -> f.toMainViewDto());
+
     }
 
 

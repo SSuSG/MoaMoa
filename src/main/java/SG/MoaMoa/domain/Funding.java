@@ -2,6 +2,7 @@ package SG.MoaMoa.domain;
 
 
 import SG.MoaMoa.dto.FundingDto;
+import SG.MoaMoa.dto.MainViewFundingDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -72,6 +73,7 @@ public class Funding {
                 .introduction(introduction)
                 .information(information)
                 .notice(notice)
+                .imageList(imageList)
                 .fundingStatus(fundingStatus)
                 .discountPrice(discountPrice)
                 .minFundingCount(minFundingCount)
@@ -82,6 +84,24 @@ public class Funding {
                 .build();
 
         return fundingDto;
+    }
+
+    //펀딩리스트에 보여줄 메인화면 펀딩 dto
+    public MainViewFundingDto toMainViewDto(){
+        String mainImageFileName = "";
+        for (Image image : this.getImageList()) {
+            if(image.isMain())
+                mainImageFileName = image.getStoreImageName();
+        }
+
+        return MainViewFundingDto.builder()
+                .id(id)
+                .price(price)
+                .discountPrice(discountPrice)
+                .restaurantName(restaurantName)
+                .mainImageFileName(mainImageFileName)
+                .build();
+
     }
 
 

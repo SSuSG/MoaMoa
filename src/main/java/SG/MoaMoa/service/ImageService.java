@@ -1,11 +1,13 @@
 package SG.MoaMoa.service;
 
 
+import SG.MoaMoa.domain.Funding;
 import SG.MoaMoa.domain.Image;
 import SG.MoaMoa.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,7 +38,7 @@ public class ImageService {
         List<Image> storeImageResult = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
             if (!multipartFile.isEmpty()){
-                storeImageResult.add(storeImage(multipartFile));
+                storeImageResult.add(storeImage(multipartFile , false) );
             }
         }
         return storeImageResult;
@@ -44,7 +46,7 @@ public class ImageService {
 
 
     //이미지 하나를 실제로 저장하고 Image객체로 바꾸어 저장
-    public Image storeImage(MultipartFile multipartFile) throws IOException
+    public Image storeImage(MultipartFile multipartFile , boolean isMain) throws IOException
     {
         if(multipartFile.isEmpty())
             return null;
@@ -53,7 +55,8 @@ public class ImageService {
         String originalImageName = multipartFile.getOriginalFilename();
         String storeImageName = createStoreFileName(originalImageName);
         multipartFile.transferTo(new File(getFullPath(storeImageName)));
-        return Image.builder().uploadImageName(originalImageName).storeImageName(storeImageName).build();
+
+        return Image.builder().uploadImageName(originalImageName).storeImageName(storeImageName).isMain(isMain).build();
     }
 
     //서버 내부에서 관리하는 이미지명은 유일한 이름을 생성하는 UUID 를 사용해서 충돌하지 않도록 한다.
@@ -68,5 +71,6 @@ public class ImageService {
         int pos = originalImageName.lastIndexOf(".");
         return originalImageName.substring(pos + 1);
     }
+
 
 }

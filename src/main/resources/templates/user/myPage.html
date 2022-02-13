@@ -7,15 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-        body {
-            min-height: 100vh;
-
-            background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
-            background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-            background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-            background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-            background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
-        }
 
         .input-form {
             max-width: 680px;
@@ -36,7 +27,9 @@
 
 <body>
 <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+<div id="'wrapper">
 
+</div>
 <div class="container">
     <div class="input-form-backgroud row">
         <div class="input-form col-md-12 mx-auto">
@@ -63,6 +56,10 @@
     </div>
 </div>
 
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+</footer>
 </body>
 
 </html>

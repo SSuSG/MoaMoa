@@ -3,6 +3,7 @@ package SG.MoaMoa.dto;
 
 import SG.MoaMoa.domain.Funding;
 import SG.MoaMoa.domain.FundingStatus;
+import SG.MoaMoa.domain.Image;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,7 +32,9 @@ public class FundingDto {
     private Integer minFundingCount;
     private Integer maxFundingCount;
     private Integer nowFundingCount;
+    private MultipartFile mainImage;
     private List<MultipartFile> imageFiles;
+    private List<Image> imageList;
 
     @Enumerated(EnumType.STRING)
     private FundingStatus fundingStatus;
@@ -84,5 +87,7 @@ public class FundingDto {
         return build;
     }
 
-
+    public void setMainImage(MultipartFile mainImage) {
+        this.mainImage = mainImage;
+    }
 }

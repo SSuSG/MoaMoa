@@ -3,11 +3,15 @@ package SG.MoaMoa.controller;
 import SG.MoaMoa.domain.RoleType;
 import SG.MoaMoa.domain.User;
 import SG.MoaMoa.dto.FundingDto;
+import SG.MoaMoa.dto.MainViewFundingDto;
 import SG.MoaMoa.service.FundingService;
+import SG.MoaMoa.service.ImageService;
 import SG.MoaMoa.web.argumentresolver.Login;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,12 +19,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 @Slf4j
 @Controller
@@ -28,6 +30,7 @@ import java.io.IOException;
 public class FundingController {
 
     private final FundingService fundingService;
+    private final ImageService imageService;
 
     //admin페이지
     @GetMapping("/admin")
@@ -68,13 +71,29 @@ public class FundingController {
             @RequestParam(defaultValue = "1") int page , Model model
     ){
         Pageable pageable = PageRequest.of(page-1,4);
-        Page<FundingDto> fundingList = fundingService.getFundings(pageable);
-        System.out.println("fundingList.getTotalPages() = " + fundingList.getTotalPages());
-        System.out.println("fundingList.getTotalElements() = " + fundingList.getTotalElements());
-        System.out.println("fundingList.getPageSize() = " + fundingList.getPageable().getPageSize());
-        System.out.println("fundingList.getPageNumber() = " + fundingList.getPageable().getPageNumber());
+        Page<MainViewFundingDto> fundingList = fundingService.getFundings(pageable);
+
         model.addAttribute("fundingList" , fundingList);
         return "/funding/fundingList";
     }
+
+    //펀딩 메인 이미지
+    @ResponseBody
+    @GetMapping("/images/{imageName}")
+    public Resource downloadImage(@PathVariable String imageName) throws
+            MalformedURLException {
+        return new UrlResource("file:" + imageService.getFullPath(imageName));
+    }
+
+    @GetMapping("/funding/{id}")
+    public String viewFunding(
+            @Login User loginUser,
+            @PathVariable Long id, Model model
+    ){
+        FundingDto funding = fundingService.getFunding(id);
+        model.addAttribute("funding" , funding);
+        return "/funding/viewFunding";
+    }
+
 
 }

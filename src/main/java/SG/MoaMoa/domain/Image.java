@@ -21,6 +21,7 @@ public class Image {
 
     private String uploadImageName;
     private String storeImageName;
+    private boolean isMain;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "funding_id")

@@ -5,15 +5,6 @@
 </head>
 <body>
 <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-<!-- Header-->
-<header class="bg-dark py-5">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">MoaMoa Funding List</h1>
-            <p class="lead fw-normal text-white-50 mb-0">Choice with many Fundings</p>
-        </div>
-    </div>
-</header>
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
@@ -25,7 +16,7 @@
                             <!-- Sale badge-->
                             <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
                             <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                            <img class="card-img-top" th:src="|/images/${funding.getMainImageFileName()}|" alt="..." />
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
@@ -37,7 +28,7 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" th:href="@{/funding(id=${funding.id})}">참여하기</a></div>
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" th:href="|/funding/${funding.getId()}|">참여하기</a></div>
                             </div>
                         </div>
                     </div>
@@ -106,7 +97,7 @@
                 <!--
                 마지막 페이지
                 -->
-                <li th:classappend=" ${T(Math).floor(totalPages/10)*10 <= startPage} ? 'disabled'" class="page-item">
+                <li th:classappend=" ${T(Math).floor(totalPages/4)*4 <= startPage} ? 'disabled'" class="page-item">
                     <a class="page-link" th:href="@{/funding(page=${totalPages})}">
                         <span>&raquo;</span>
                         <span class="sr-only">First</span>
@@ -120,7 +111,7 @@
 
 <!-- Footer-->
 <footer class="py-5 bg-dark">
-    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div>
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
 </footer>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
