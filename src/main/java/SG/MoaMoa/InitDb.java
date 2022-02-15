@@ -1,9 +1,6 @@
 package SG.MoaMoa;
 
-import SG.MoaMoa.domain.Funding;
-import SG.MoaMoa.domain.FundingStatus;
-import SG.MoaMoa.domain.RoleType;
-import SG.MoaMoa.domain.User;
+import SG.MoaMoa.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -227,6 +224,11 @@ public class InitDb {
                     .roleType(RoleType.REGULAR)
                     .build();
 
+            Board board1 = Board.builder().title("ex1").writer("zzz").build();
+            Board board2 = Board.builder().title("ex2").writer("xxx").build();
+            Board board3 = Board.builder().title("ex3").writer("ccc").build();
+            Board board4 = Board.builder().title("ex4").writer("ddd").build();
+
             em.persist(user1);
             em.persist(user2);
             em.persist(user3);
@@ -247,6 +249,11 @@ public class InitDb {
             em.persist(ex7);
             em.persist(ex8);
             em.persist(ex9);
+
+            em.persist(board1);
+            em.persist(board2);
+            em.persist(board3);
+            em.persist(board4);
 
         }
 

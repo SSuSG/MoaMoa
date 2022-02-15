@@ -45,27 +45,21 @@ public class FundingController {
 
     //펀딩등록하기
     @GetMapping("/admin/funding")
-    public String viewRegFundingPage(
-            @Login User loginUser,
-            @ModelAttribute FundingDto fundingDto
-    ){
+    public String viewRegFundingPage(@ModelAttribute FundingDto fundingDto){
         log.info("hihi");
         return "/admin/registerFunding";
     }
 
     //펀딩등록하기
     @PostMapping("/admin/funding")
-    public String registerFunding(
-            @Login User loginUser,
-            @ModelAttribute FundingDto fundingDto
-    ) throws IOException {
+    public String registerFunding(@ModelAttribute FundingDto fundingDto) throws IOException {
         log.info("{}" , fundingDto.getStartDate());
         fundingService.createFunding(fundingDto);
         return "redirect:/admin";
     }
 
     //펀딩리스트들
-    @GetMapping("/funding")
+    @GetMapping("/fundings")
     public String viewFundingList(
             @Login User loginUser,
             @RequestParam(defaultValue = "1") int page , Model model
@@ -93,6 +87,16 @@ public class FundingController {
         FundingDto funding = fundingService.getFunding(id);
         model.addAttribute("funding" , funding);
         return "/funding/viewFunding";
+    }
+
+    //펀딩참가
+    @PostMapping("/funding/application/{fundingId}")
+    public String applyFunding(
+            @Login User loginUser,
+            @PathVariable Long fundingId
+    ){
+        fundingService.applyFunding(loginUser.getId() , fundingId);
+        return "redirect:/fundings";
     }
 
 

@@ -37,7 +37,6 @@ public class FundingService {
     private final UserFundingRepository userFundingRepository;
     private final UserRepository userRepository;
     private final ImageService imageService;
-    private final ImageRepository imageRepository;
     private final CouponService couponService;
 
 
@@ -79,6 +78,27 @@ public class FundingService {
 
     }
 
+    //한 사람이 펀딩에 참여!!
+    @Transactional
+    public void applyFunding(Long userId, Long fundingId){
+        Funding funding = fundingRepository.findById(fundingId).get();
+
+        //이번 신청으로 max에 도달했다면
+        if(checkMaxFundingCount(fundingId)){
+            //nowFundingCount +1 증가
+            funding.addFundingCount();
+            //user와 funding의 연관관계 맺어줌
+            addUserFunding(userId,fundingId);
+
+            //쿠폰 발송
+            couponService.createCoupon(funding);
+        }else{
+            funding.addFundingCount();
+            addUserFunding(userId,fundingId);
+        }
+
+    }
+
 
     //한 사람이 펀딩에 참여했을때 Funding의 userFunding 추가
     @Transactional
@@ -96,46 +116,19 @@ public class FundingService {
     }
 
 
-    //한 사람이 펀딩에 참여했을때 nowFundingCount +1 해주는 메서드
-    @Transactional
-    public void addNowFundingCount(Long fundingId){
-        log.info("FundingService : addNowFundingCount");
-        Optional<Funding> findFunding = fundingRepository.findById(fundingId);
-        findFunding.get().addFundingCount();
-
-    }
-
 
     //이번 신청으로 펀딩이max에 도달한지
     @Transactional
-    public boolean checkMaxFundingCount(Long userId , Long fundingId){
+    public boolean checkMaxFundingCount(Long fundingId){
         log.info("FundingService : checkMaxFundingCount");
         Funding findFunding = fundingRepository.findById(fundingId).get();
-        if(findFunding.checkMaxFunding()){ // 이번 신청으로 max에 도달할수있다면
-            findFunding.addFundingCount();
-
-            UserFunding userFunding = UserFunding.builder().user(userRepository.findById(userId).get())
-                    .funding(fundingRepository.findById(fundingId).get()).build();
-            findFunding.addUserFunding(userFunding);
-
-            userFundingRepository.save(userFunding);
-            couponService.createCoupon(findFunding); //유저들에게 쿠폰발송
+        // 이번 신청으로 max에 도달할수있다면
+        if(findFunding.checkMaxFunding()){
             return true;
         }
         //이번 신청으로 max에 도달하지 못했음
         return false;
     }
-
-    //펀딩이 max에 도달했는가?
-    public boolean isMaxFundingCount(Long fundingId) {
-        log.info("FundingService : isMaxFundingCount");
-        Funding findFunding = fundingRepository.findById(fundingId).get();
-        if(findFunding.getMaxFundingCount() == findFunding.getNowFundingCount()){
-            return true;
-        }
-        return false;
-    }
-
 
     //매일 자정에 펀딩이 끝났는지 아닌지 체크
     @Transactional
@@ -171,11 +164,4 @@ public class FundingService {
         }
     }
 
-    public List<FundingDto> findFundingList(String restaurantName) {
-        log.info("FundingService : findFundingList");
-        return fundingRepository.findByRestaurantNameContaining(restaurantName)
-                .stream().map(f -> f.toDto()).collect(Collectors.toList());
-
-
-    }
 }

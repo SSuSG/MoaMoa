@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head th:replace="fragments/header :: header" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div th:replace="fragments/bodyHeader :: bodyHeader"/>
+<th:block>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">제목</th>
+            <th scope="col">글쓴이</th>
+            <th scope="col">작성일</th>
+        </tr>
+        </thead>
+        <tbody th:each="board : ${boardList}">
+        <tr>
+            <th scope="row" th:text="${board.getId()}" ></th>
+            <td><a th:href="|/board/${board.getId()}|" th:text="${board.getTitle()}"}></a></td>
+            <td th:text="${board.getWriter()}"></td>
+            <td th:text="${#temporals.format(board.createdDate,'yyyy-MM-dd HH:mm')}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</th:block>
+
+
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+</footer>
+</body>
+
+</body>
+</html>
