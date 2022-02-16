@@ -20,23 +20,30 @@
             -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
             box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
         }
+
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
     </style>
 </head>
 <body>
 <div th:replace="fragments/bodyHeader :: bodyHeader"/>
 <div class="container">
-    <div class="input-form-backgroud row">
+    <div class="input-form-background row">
         <div class="input-form col-md-12 mx-auto">
             <h4 class="mb-3">공지사항 등록</h4>
             <form th:action="@{/admin/board}" th:object="${boardDto}" method="post">
                 <div class="mb-3">
                     <label for="title">제목</label>
                     <input type="text" class="form-control" id="title" placeholder="title" th:field="*{title}">
+                    <div class="field-error" th:errors="*{title}" />
                 </div>
 
                 <div class="mb-3">
                     <label for="content">내용</label>
                     <input type="text" class="form-control" id="content" placeholder="content" th:field="*{content}">
+                    <div class="field-error" th:errors="*{content}" />
                 </div>
 
                 <button class="btn btn-primary btn-lg btn-block" type="submit">공지사항 등록</button>
@@ -44,7 +51,8 @@
         </div>
     </div>
 </div>
-
+<br>
+<br>
 <!-- Footer-->
 <footer class="py-5 bg-dark">
     <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>

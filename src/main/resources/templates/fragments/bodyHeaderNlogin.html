@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div class="header" th:fragment="bodyHeader">
+<div class="header" th:fragment="bodyHeaderNlogin">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container px-4 px-lg-5">
@@ -12,8 +12,7 @@
                     <li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
                     <li class="nav-item"><a class="nav-link" href="/fundings">Restaurant</a></li>
                     <li class="nav-item"><a class="nav-link" href="/boards">FAQ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/user">MyPage</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
                 </ul>
             </div>
         </div>
@@ -23,7 +22,7 @@
     <header class="bg-dark py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">MoaMoa Funding List</h1>
+                <h1 class="display-4 fw-bolder">MoaMoa Funding</h1>
                 <p class="lead fw-normal text-white-50 mb-0">Choice with many Fundings</p>
             </div>
         </div>

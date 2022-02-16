@@ -27,6 +27,11 @@
         font-size: 3.5rem;
       }
     }
+
+    .field-error {
+      border-color: #dc3545;
+      color: #dc3545;
+    }
   </style>
 
   <!-- Custom styles for this template -->
@@ -35,22 +40,23 @@
 <body class="text-center">
 <main class="form-signin">
   <form th:action th:object="${loginDto}" method="post">
+    <img class="mb-4" src="/bootstrap/img/bootstrap-logo.svg" alt="" width="72" height="57">
+    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
     <div th:if="${#fields.hasGlobalErrors()}">
       <p class="field-error" th:each="err : ${#fields.globalErrors()}"
          th:text="${err}">전체 오류 메시지</p>
     </div>
 
-    <img class="mb-4" src="/bootstrap/img/bootstrap-logo.svg" alt="" width="72" height="57">
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
-
     <div class="form-floating">
       <input type="text" class="form-control" id="floatingInput" th:field="*{loginId}" th:errorclass="field-error">
       <label for="floatingInput">Login Id</label>
+      <div class="field-error" th:errors="*{loginId}" />
     </div>
     <div class="form-floating">
       <input type="password" class="form-control" id="floatingPassword" th:field="*{password}" th:errorclass="field-error">
       <label for="floatingPassword">Password</label>
+      <div class="field-error" th:errors="*{password}" />
     </div>
 
     <hr class="my-4">

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head th:replace="fragments/header :: header" />
+
+    <style>
+        .input-form {
+            max-width: 680px;
+
+            margin-top: 80px;
+            padding: 32px;
+
+            background: #fff;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+        }
+
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
+
+</head>
+<body>
+<div th:replace="fragments/bodyHeaderNlogin :: bodyHeaderNlogin"/>
+
+<div class="container">
+    <div class="input-form-background row">
+        <div class="input-form col-md-12 mx-auto">
+            <h4 class="mb-3">아이디 찾기</h4>
+            <form th:action="@{/find/loginId}" th:object="${findLoginIdDto}" method="post">
+                <div class="mb-3">
+                    <label for="name">이름</label>
+                    <input type="text" class="form-control" id="name" placeholder="name" th:field="*{name}">
+                    <div class="field-error" th:errors="*{name}" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="email">이메일</label>
+                    <input type="text" class="form-control" id="email" placeholder="email" th:field="*{email}">
+                    <div class="field-error" th:errors="*{email}" />
+                </div>
+
+                <div th:if="${#fields.hasGlobalErrors()}">
+                    <p class="field-error" th:each="err : ${#fields.globalErrors()}"
+                       th:text="${err}">메시지</p>
+                </div>
+
+                <button class="btn btn-primary btn-lg btn-block" type="submit">아이디 찾기</button>
+            </form>
+            <br>
+            <form th:action="@{/find/password}" method="get">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">비밀번호 찾기</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+</footer>
+</body>
+</html>

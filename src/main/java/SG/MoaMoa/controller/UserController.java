@@ -2,6 +2,8 @@ package SG.MoaMoa.controller;
 
 import SG.MoaMoa.SessionConst;
 import SG.MoaMoa.domain.User;
+import SG.MoaMoa.dto.FindLoginIdDto;
+import SG.MoaMoa.dto.FindPasswordDto;
 import SG.MoaMoa.dto.LoginDto;
 import SG.MoaMoa.dto.UserDto;
 import SG.MoaMoa.service.UserService;
@@ -43,9 +45,9 @@ public class UserController {
                         ){
         if(bindingResult.hasErrors())
             return "user/login";
-        log.info("{}" , loginDto.getLoginId());
+
         User loginUser = userService.login(loginDto.getLoginId(), loginDto.getPassword());
-        log.info("{}" , loginUser.getName());
+
         if(loginUser == null){
             bindingResult.reject("loginFail" , "아이디 또는 비밀번호가 맞지 않습니다.");
             return "user/login";
@@ -59,6 +61,16 @@ public class UserController {
             return "redirect:"+redirectUrl;
     }
 
+    //로그아웃
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if(session != null){
+            session.invalidate();
+        }
+        return "redirect:/";
+    }
+
     //회원가입
     @GetMapping("/join")
     public String join(@ModelAttribute UserDto userDto){
@@ -68,15 +80,61 @@ public class UserController {
 
     //회원가입
     @PostMapping("/join")
-    public String joinSuccess(@ModelAttribute UserDto userDto , BindingResult result) throws Exception {
-        if(result.hasErrors()){
+    public String joinSuccess(@Valid @ModelAttribute UserDto userDto , BindingResult bindingResult) throws Exception {
+        if(bindingResult.hasErrors())
             return "user/join";
-        }
 
-        if(userService.join(userDto)){
-            return "redirect:/login";
+        //회원 중복이 존재할경우
+        if(userService.join(userDto).equals("duplicate")){
+            return "redirect:/user/join";
         }
-        return "redirect:/user/join";
+        return "redirect:/login";
+    }
+
+    //아이디 찾기
+    @GetMapping("/find/loginId")
+    public String viewFindLoginId(@ModelAttribute FindLoginIdDto findLoginIdDto){
+        return "/user/findId";
+    }
+
+    //아이디 찾기
+    @PostMapping("/find/loginId")
+    public String findLoginId(@ModelAttribute FindLoginIdDto findLoginIdDto , BindingResult bindingResult){
+        if(bindingResult.hasErrors())
+            return "/user/findId";
+
+        String findLoginId = userService.findLoginId(findLoginIdDto);
+        //입력한 정보와 일치하는 아이디가 없을경우
+        if(findLoginId.equals("false")){
+            bindingResult.reject("findLoginIdFail" , "입력한 정보와 일치하는 아이디가 없습니다.");
+            return "/user/findId";
+        }else{
+            bindingResult.reject("findLoginIdSuccess" , "loginId : " + findLoginId);
+            return "/user/findId";
+        }
+    }
+
+
+    //비밀번호 찾기
+    @GetMapping("/find/password")
+    public String viewFindPassword(@ModelAttribute FindPasswordDto findPasswordDto){
+        return "/user/findPw";
+    }
+
+    //비밀번호 찾기
+    @PostMapping("/find/password")
+    public String findPassword(@ModelAttribute FindPasswordDto findPasswordDto , BindingResult bindingResult){
+        if(bindingResult.hasErrors())
+            return "/userPw";
+
+        String findPassword = userService.findPassword(findPasswordDto);
+        if (findPassword.equals("false")){
+            bindingResult.reject("findPasswordFail" , "입력한 정보와 일치하는 비밀번호가 없습니다.");
+            return "/user/findPw";
+        }else{
+            bindingResult.reject("findPasswordSuccess" , "Password : " + findPassword);
+            return "/user/findPw";
+        }
     }
 
     //마이페이지
@@ -113,7 +171,7 @@ public class UserController {
             @Login User loginUser, Model model
     ){
         model.addAttribute("loginUser" , loginUser);
-        return "/user/funding";
+        return "myFunding";
     }
 
     //결제

@@ -12,6 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,16 +25,29 @@ import java.util.List;
 public class FundingDto {
 
     private Long id;
+
+    @NotEmpty(message = "가게이름을 입력해주세요.")
     private String restaurantName;
+    @NotEmpty(message = "메뉴를 입력해주세요.")
     private String menu;
+    @NotEmpty(message = "가게정보를 입력해주세요.")
     private String information;
+    @NotEmpty(message = "가게소개를 입력해주세요.")
     private String introduction;
+    @NotEmpty(message = "공지사항을 입력해주세요.")
     private String notice;
+
+    @NotNull(message = "할인가격을 입력해주세요.")
     private Integer discountPrice;
+    @NotNull(message = "정상가격 입력해주세요.")
     private Integer price;
+    @NotNull(message = "최소펀딩수를 입력해주세요.")
+    @Min(1)
     private Integer minFundingCount;
+    @NotNull(message = "최대펀딩수를 입력해주세요.")
     private Integer maxFundingCount;
     private Integer nowFundingCount;
+
     private MultipartFile mainImage;
     private List<MultipartFile> imageFiles;
     private List<Image> imageList;

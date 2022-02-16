@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -26,14 +28,25 @@ public class InitDb {
 
         private final EntityManager em;
         public void dbInit1(){
+
+            List<Image> images1 = new ArrayList<>();
+            List<Image> images2 = new ArrayList<>();
+            List<Image> images3 = new ArrayList<>();
+            List<Image> images4 = new ArrayList<>();
+            List<Image> images5 = new ArrayList<>();
+            List<Image> images6 = new ArrayList<>();
+            List<Image> images7 = new ArrayList<>();
+            List<Image> images8 = new ArrayList<>();
+
             Funding funding1 = Funding.builder()
                     .minFundingCount(1)
                     .maxFundingCount(2)
                     .nowFundingCount(0)
                     .price(10000)
                     .discountPrice(8000)
-                    .menu("칼국수")
-                    .restaurantName("에비시")
+                    .menu("황금올리브")
+                    .restaurantName("BBQ")
+                    .imageList(images1)
                     .startDate(LocalDateTime.now())
                     .endDate(LocalDateTime.now().plusSeconds(5))
                     .introduction("asd")
@@ -41,6 +54,8 @@ public class InitDb {
                     .notice("qwe")
                     .fundingStatus(FundingStatus.PROCEEDING)
                     .build();
+
+            funding1.getImageList().add(Image.builder().uploadImageName("exbbq1.jpg").storeImageName("bbq1.jpg").isMain(true).funding(funding1).build());
 
             Funding funding2 = Funding.builder()
                     .minFundingCount(10)
@@ -48,8 +63,9 @@ public class InitDb {
                     .nowFundingCount(0)
                     .price(20000)
                     .discountPrice(11000)
-                    .menu("카레")
-                    .restaurantName("큐덮이")
+                    .menu("뿌링클")
+                    .restaurantName("BHC")
+                    .imageList(images2)
                     .startDate(LocalDateTime.now())
                     .endDate(LocalDateTime.now().plusSeconds(5))
                     .introduction("asd")
@@ -57,6 +73,8 @@ public class InitDb {
                     .notice("qwe")
                     .fundingStatus(FundingStatus.PROCEEDING)
                     .build();
+
+            funding2.getImageList().add(Image.builder().uploadImageName("exbhc1.jpg").storeImageName("bhc1.jpg").isMain(true).funding(funding2).build());
 
             Funding funding3 = Funding.builder()
                     .minFundingCount(30)
@@ -64,8 +82,9 @@ public class InitDb {
                     .nowFundingCount(0)
                     .price(20000)
                     .discountPrice(18000)
-                    .menu("덮밥")
-                    .restaurantName("시비시")
+                    .menu("발사믹 치킨")
+                    .restaurantName("교촌치킨")
+                    .imageList(images3)
                     .startDate(LocalDateTime.now())
                     .endDate(LocalDateTime.now().plusSeconds(5))
                     .introduction("asd")
@@ -74,14 +93,17 @@ public class InitDb {
                     .fundingStatus(FundingStatus.PROCEEDING)
                     .build();
 
+            funding3.getImageList().add(Image.builder().uploadImageName("exkyochon1.jpg").storeImageName("kyochon1.jpg").isMain(true).funding(funding3).build());
+
             Funding funding4 = Funding.builder()
                     .minFundingCount(30)
                     .maxFundingCount(100)
                     .nowFundingCount(0)
                     .price(8000)
                     .discountPrice(6000)
-                    .menu("제육")
-                    .restaurantName("에스디")
+                    .menu("고추바사삭")
+                    .restaurantName("굽네치킨")
+                    .imageList(images4)
                     .startDate(LocalDateTime.now())
                     .endDate(LocalDateTime.now().plusSeconds(13))
                     .introduction("asd")
@@ -90,14 +112,17 @@ public class InitDb {
                     .fundingStatus(FundingStatus.PROCEEDING)
                     .build();
 
+            funding4.getImageList().add(Image.builder().uploadImageName("exgubne1.jpg").storeImageName("gubne1.jpg").isMain(true).funding(funding4).build());
+
             Funding funding5 = Funding.builder()
                     .minFundingCount(20)
                     .maxFundingCount(40)
                     .nowFundingCount(0)
                     .price(25000)
                     .discountPrice(20000)
-                    .menu("피자")
-                    .restaurantName("피오큐")
+                    .menu("순살")
+                    .restaurantName("지코바")
+                    .imageList(images5)
                     .startDate(LocalDateTime.now())
                     .endDate(LocalDateTime.now().plusSeconds(15))
                     .introduction("asd")
@@ -106,14 +131,17 @@ public class InitDb {
                     .fundingStatus(FundingStatus.PROCEEDING)
                     .build();
 
+            funding5.getImageList().add(Image.builder().uploadImageName("exgikoba1.jpg").storeImageName("gikoba1.jpg").isMain(true).funding(funding5).build());
+
             Funding funding6 = Funding.builder()
                     .minFundingCount(10)
                     .maxFundingCount(50)
                     .nowFundingCount(0)
                     .price(150000)
                     .discountPrice(13000)
-                    .menu("돈까스")
-                    .restaurantName("케이제이")
+                    .menu("양념치킨")
+                    .restaurantName("처갓집")
+                    .imageList(images6)
                     .startDate(LocalDateTime.now())
                     .endDate(LocalDateTime.now().plusSeconds(20))
                     .introduction("asd")
@@ -121,6 +149,8 @@ public class InitDb {
                     .notice("qwe")
                     .fundingStatus(FundingStatus.PROCEEDING)
                     .build();
+
+            funding6.getImageList().add(Image.builder().uploadImageName("exchugazip1.jpg").storeImageName("chugazip1.jpg").isMain(true).funding(funding6).build());
 
             Funding funding7 = Funding.builder()
                     .minFundingCount(10)
@@ -128,8 +158,9 @@ public class InitDb {
                     .nowFundingCount(0)
                     .price(150000)
                     .discountPrice(17000)
-                    .menu("돈까스")
-                    .restaurantName("이케이큐")
+                    .menu("블랙알리오")
+                    .restaurantName("푸라닭")
+                    .imageList(images7)
                     .startDate(LocalDateTime.now())
                     .endDate(LocalDateTime.now().plusSeconds(20))
                     .introduction("asd")
@@ -138,14 +169,17 @@ public class InitDb {
                     .fundingStatus(FundingStatus.PROCEEDING)
                     .build();
 
+            funding7.getImageList().add(Image.builder().uploadImageName("expuradak1.jpg").storeImageName("puradak1.jpg").isMain(true).funding(funding7).build());
+
             Funding funding8 = Funding.builder()
                     .minFundingCount(10)
                     .maxFundingCount(50)
                     .nowFundingCount(0)
                     .price(150000)
                     .discountPrice(12000)
-                    .menu("돈까스")
-                    .restaurantName("예시연")
+                    .menu("후라이드")
+                    .restaurantName("후라이드 참 잘하는집")
+                    .imageList(images8)
                     .startDate(LocalDateTime.now())
                     .endDate(LocalDateTime.now().plusSeconds(20))
                     .introduction("asd")
@@ -153,6 +187,8 @@ public class InitDb {
                     .notice("qwe")
                     .fundingStatus(FundingStatus.PROCEEDING)
                     .build();
+
+            funding8.getImageList().add(Image.builder().uploadImageName("exhuchamzal1.jpg").storeImageName("huchamzal1.jpg").isMain(true).funding(funding8).build());
 
             Funding ex1 = Funding.builder()
                     .restaurantName("ex1")

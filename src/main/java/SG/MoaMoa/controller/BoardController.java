@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -29,8 +30,7 @@ public class BoardController {
 
     //공지사항 읽기
     @GetMapping("/board/{id}")
-    public String viewBoard(
-            @PathVariable Long id, Model model){
+    public String viewBoard(@PathVariable Long id, Model model){
         model.addAttribute("board" , boardService.getBoard(id));
         return "/board/viewBoard";
     }
@@ -45,10 +45,10 @@ public class BoardController {
     @PostMapping("/admin/board")
     public String writeBoard(
             @Login User loginUser ,
-            @ModelAttribute BoardDto boardDto
+            @Valid @ModelAttribute BoardDto boardDto , BindingResult bindingResult
     ){
-        log.info("Title : {}",boardDto.getTitle());
-        log.info("Content : {}",boardDto.getContent());
+        if(bindingResult.hasErrors())
+            return "/board/writeBoard";
         boardService.saveBoard(loginUser.getId(), boardDto);
         return "redirect:/boards";
     }

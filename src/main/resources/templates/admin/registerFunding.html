@@ -22,13 +22,18 @@
             -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
             box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
         }
+
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
     </style>
 </head>
 <body>
 <div th:replace="fragments/bodyHeader :: bodyHeader"/>
 
 <div class="container">
-    <div class="input-form-backgroud row">
+    <div class="input-form-background row">
         <div class="input-form col-md-12 mx-auto">
             <h4 class="mb-3">펀딩등록</h4>
             <form class="validation-form" novalidate th:action th:object="${fundingDto}" method="post" enctype="multipart/form-data">
@@ -36,49 +41,55 @@
                 <div class="mb-3">
                     <label for="restaurantName">가게이름</label>
                     <input type="text" class="form-control" id="restaurantName" placeholder="restaurantName" th:field="*{restaurantName}" th:errorclass="field-error" required>
+                    <div class="field-error" th:errors="*{restaurantName}" />
                 </div>
 
                 <div class="mb-3">
                     <label for="menu">메뉴</label>
                     <input type="text" class="form-control" id="menu" placeholder="menu" th:field="*{menu}" th:errorclass="field-error" required>
-
+                    <div class="field-error" th:errors="*{menu}" />
                 </div>
 
                 <div class="mb-3">
                     <label for="information">가게정보</label>
                     <input type="text" class="form-control" id="information" placeholder="information" th:field="*{information}" th:errorclass="field-error" required>
+                    <div class="field-error" th:errors="*{information}" />
                 </div>
 
                 <div class="mb-3">
                     <label for="introduction">가게소개</label>
                     <input type="text" class="form-control" id="introduction" placeholder="introduction" th:field="*{introduction}" th:errorclass="field-error" required>
-
+                    <div class="field-error" th:errors="*{introduction}" />
                 </div>
 
                 <div class="mb-3">
                     <label for="notice">가게 공지사항</label>
                     <input type="text" class="form-control" id="notice" placeholder="notice" th:field="*{notice}" th:errorclass="field-error" required>
+                    <div class="field-error" th:errors="*{notice}" />
                 </div>
 
                 <div class="mb-3">
                     <label for="discountPrice">할인가격</label>
                     <input type="text" class="form-control" id="discountPrice" placeholder="discountPrice" th:field="*{discountPrice}" th:errorclass="field-error" required>
+                    <div class="field-error" th:errors="*{discountPrice}" />
                 </div>
 
                 <div class="mb-3">
                     <label for="price">가격</label>
                     <input type="text" class="form-control" id="price" placeholder="price" th:field="*{price}" th:errorclass="field-error" required>
+                    <div class="field-error" th:errors="*{price}" />
                 </div>
 
                 <div class="mb-3">
                     <label for="minFundingCount">최소펀딩수</label>
                     <input type="text" class="form-control" id="minFundingCount" placeholder="minFundingCount" th:field="*{minFundingCount}" th:errorclass="field-error" required>
-
+                    <div class="field-error" th:errors="*{minFundingCount}" />
                 </div>
 
                 <div class="mb-3">
                     <label for="maxFundingCount">최대펀딩수</label>
                     <input type="text" class="form-control" id="maxFundingCount" placeholder="maxFundingCount" th:field="*{maxFundingCount}" th:errorclass="field-error" required>
+                    <div class="field-error" th:errors="*{maxFundingCount}" />
                 </div>
 
                 <div class="mb-3">
@@ -107,6 +118,8 @@
         </div>
     </div>
 </div>
+<br>
+<br>
 <!-- Footer-->
 <footer class="py-5 bg-dark">
     <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>

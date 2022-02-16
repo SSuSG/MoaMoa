@@ -35,23 +35,24 @@ public class UserService {
 
     //회원가입
     @Transactional
-    public boolean join(UserDto userDto) throws Exception {
-        log.info("UserService : join1");
+    public String join(UserDto userDto) throws Exception {
+        log.info("UserService : join");
+
+        //회원 중복체크 (이름+이메일)
         if(validateDuplicateUser(userDto)){
-            throw new IllegalStateException("이미 존재하는 회원입니다.");
+            return "duplicate";
         }
 
         //인증키를 만들고 이메일 보내기
         String email = userDto.getEmail();
         String authenticationKey = createKey();
         sendSimpleMessage(email,authenticationKey);
-        log.info("UserService : join2");
 
         User user = userDto.toEntity();
         user.setAuthenticationKey(authenticationKey);
         user.setRoleType(RoleType.ASSOCIATE);
         userRepository.save(user);
-        return true;
+        return "success";
     }
 
     //로그인

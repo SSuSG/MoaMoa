@@ -34,8 +34,6 @@ public class UserDto {
 
     private RoleType roleType;
 
-    //계좌추가
-
     public User toEntity(){
         User build = User.builder()
                 .name(name)

@@ -19,8 +19,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -40,20 +42,24 @@ public class FundingController {
         if(loginUser.getRoleType() == RoleType.ADMIN){
             return "/admin/adminPage";
         }
+        //admin아닐시 메시지도 뿌려주기?
         return "redirect:/";
     }
 
     //펀딩등록하기
     @GetMapping("/admin/funding")
     public String viewRegFundingPage(@ModelAttribute FundingDto fundingDto){
-        log.info("hihi");
+        log.info("FundingController : viewRegFundingPage");
         return "/admin/registerFunding";
     }
 
     //펀딩등록하기
     @PostMapping("/admin/funding")
-    public String registerFunding(@ModelAttribute FundingDto fundingDto) throws IOException {
-        log.info("{}" , fundingDto.getStartDate());
+    public String registerFunding(@Valid @ModelAttribute FundingDto fundingDto , BindingResult bindingResult) throws IOException {
+        if(bindingResult.hasErrors())
+            return "admin/registerFunding";
+
+        log.info("FundingController : registerFunding");
         fundingService.createFunding(fundingDto);
         return "redirect:/admin";
     }
@@ -64,21 +70,24 @@ public class FundingController {
             @Login User loginUser,
             @RequestParam(defaultValue = "1") int page , Model model
     ){
+
         Pageable pageable = PageRequest.of(page-1,4);
         Page<MainViewFundingDto> fundingList = fundingService.getFundings(pageable);
-
         model.addAttribute("fundingList" , fundingList);
+
         return "/funding/fundingList";
     }
 
-    //펀딩 메인 이미지
+    //펀딩 썸네일
     @ResponseBody
     @GetMapping("/images/{imageName}")
     public Resource downloadImage(@PathVariable String imageName) throws
             MalformedURLException {
+        log.info("downloadImage : {}" , imageName);
         return new UrlResource("file:" + imageService.getFullPath(imageName));
     }
 
+    //상세 펀딩 페이지
     @GetMapping("/funding/{id}")
     public String viewFunding(
             @Login User loginUser,
