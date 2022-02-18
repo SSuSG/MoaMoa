@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter @Setter
-@AllArgsConstructor @Builder @NoArgsConstructor
+@AllArgsConstructor @Builder @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board extends TimeEntity {
 
     @Id

@@ -1,9 +1,6 @@
 package SG.MoaMoa.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,6 +9,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Image {
 
     @Id
@@ -27,6 +25,4 @@ public class Image {
     @JoinColumn(name = "funding_id")
     private Funding funding;
 
-    public Image() {
-    }
 }

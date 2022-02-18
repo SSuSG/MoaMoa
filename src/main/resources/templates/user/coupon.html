@@ -5,6 +5,41 @@
 </head>
 <body>
 <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+<th:block>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">가게이름</th>
+            <th scope="col">메뉴</th>
+            <th scope="col">할인가</th>
+            <th scope="col">쿠폰상태</th>
+            <th scope="col">쿠폰사용기간</th>
+            <th scope="col">쿠폰사용</th>
+        </tr>
+        </thead>
+        <tbody th:each="coupon : ${couponList}">
+        <tr>
+            <th scope="row" th:text="${coupon.id}" ></th>
+            <td th:text="${coupon.restaurantName}" ></td>
+            <td th:text="${coupon.menu}"></td>
+            <td th:text="${coupon.discountPrice}"></td>
+            <td th:text="${coupon.couponStatus}"></td>
+            <td>
+                <span th:text="${#temporals.format(coupon.startDate,'yyyy-MM-dd')}"> </span>
+                <span>~</span>
+                <span th:text="${#temporals.format(coupon.endDate,'yyyy-MM-dd')}"> </span>
+            </td>
+            <td th:if="${coupon.couponStatus.name()} == 'AVAILABLE' ">
+                <form th:action="|/user/coupon?couponId=${coupon.id}|" method="post">
+                    <button type="submit" class="btn btn-secondary">사용하기</button>
+                </form>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</th:block>
 
 
 <br>

@@ -41,12 +41,10 @@
     <div class="input-form-background row">
         <div class="input-form col-md-12 mx-auto">
             <h4 class="mb-3">회원가입</h4>
-            <form class="validation-form" novalidate th:action th:object="${userDto}" method="post">
 
                 <div class="mb-3">
                     <label for="name">이름</label>
-                    <input type="text" class="form-control" id="name" placeholder="Name" th:field="*{name}" th:errorclass="field-error" required>
-                    <div class="field-error" th:errors="*{name}" />
+                    <input type="text" class="form-control" id="name" placeholder="Name" required>
                     <div class="invalid-feedback">
                         이름을 입력해주세요.
                     </div>
@@ -54,33 +52,46 @@
 
                 <div class="mb-3">
                     <label for="loginId">아이디</label>
-                    <input type="text" class="form-control" id="loginId" placeholder="LoginId" th:field="*{loginId}" th:errorclass="field-error" required>
-                    <div class="field-error" th:errors="*{loginId}" />
+                    <input type="text" class="form-control" id="loginId" placeholder="LoginId"  required>
+                    <br>
+                    <button type="button" class="btn btn-secondary" id="id_check">아이디중복체크</button>
                     <div class="invalid-feedback">
                         아이디를 입력해주세요.
                     </div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="password">비밀번호</label>
-                    <input type="text" class="form-control" id="password" placeholder="Password" th:field="*{password}" th:errorclass="field-error" required>
-                    <div class="field-error" th:errors="*{password}" />
-                    <div class="invalid-feedback">
-                        비밀번호를 입력해주세요.
+                <div id="password_check_id">
+                    <div class="mb-3">
+                        <label for="password">비밀번호</label>
+                        <input type="text" class="form-control" id="password" placeholder="Password"  required>
+
+                        <div class="invalid-feedback">
+                            비밀번호를 입력해주세요.
+                        </div>
                     </div>
+
+                    <div class="mb-3">
+                        <label for="checkPassword">비밀번호 재확인</label>
+                        <input type="text" class="form-control" id="checkPassword" placeholder="PasswordCheck"  required>
+                        <div class="invalid-feedback">
+                            비밀번호를 한번더 입력해주세요.
+                        </div>
+                    </div>
+                    <div class="alert alert-success" id="alert-success">비밀번호가 일치합니다.</div>
+                    <div class="alert alert-danger" id="alert-danger">비밀번호가 일치하지 않습니다.</div>
                 </div>
 
                 <div class="mb-3">
                     <label for="email">이메일</label>
-                    <input type="email" class="form-control" id="email" placeholder="you@example.com" th:field="*{email}" th:errorclass="field-error" required>
-                    <div class="field-error" th:errors="*{email}" />
+                    <input type="email" class="form-control" id="email" placeholder="you@example.com"  required>
+
                     <div class="invalid-feedback">
                         이메일을 입력해주세요.
                     </div>
                 </div>
 
-                <button class="btn btn-primary btn-lg btn-block" type="submit">가입 완료</button>
-            </form>
+                <button class="btn btn-primary btn-lg btn-block" id="join" type="submit">가입 완료</button>
+
         </div>
     </div>
 </div>
@@ -91,6 +102,109 @@
     <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
 </footer>
 
-</body>
+<script th:inline="javascript">
+    $(function(){
+        $("#alert-success").hide();
+        $("#alert-danger").hide();
+        $("#password_check_id").keyup(function(){
+            var pwd1=$("#password").val();
+            var pwd2=$("#checkPassword").val();
+            if(pwd1 != "" || pwd2 != ""){
+                if(pwd1 == pwd2){ $("#alert-success").show();
+                    $("#alert-danger").hide();
+                    $("#submit").removeAttr("disabled");
+                }else{
+                    $("#alert-success").hide();
+                    $("#alert-danger").show();
+                    $("#submit").attr("disabled", "disabled");
+                }
+            }
+        });
+    });
 
+    $('#id_check').click(function (){
+        var loginId = $("#loginId").val();
+
+        $.ajax({
+            type: "GET",
+            url: "/join/id?loginId="+loginId, //요청 url
+
+            success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                if(res == "duplicate"){
+                    var msg = "아이디가 중복됩니다. 다른 아이디를 사용하십시오."
+                    alert(msg);
+                }else{
+                    var msg = "아이디를 사용하실수 있습니다!"
+                    alert(msg);
+
+                }
+
+            },
+            error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                alert("통신 실패.")
+            }
+        });
+
+    });
+
+    $('#join').click(function (){
+
+        var name = $("#name").val();
+        var loginId = $("#loginId").val();
+        var password = $("#password").val();
+        var checkPassword = $("#checkPassword").val();
+        var email = $("#email").val();
+
+        if (name == ''){
+            alert('이름을 입력해주세요.')
+            return false;
+        }else if(loginId == ''){
+            alert('아이디를 입력해주세요.')
+            return false;
+        }else if(password == '') {
+            alert('비밀번호를 입력해주세요.')
+            return false;
+        }else if(checkPassword == ''){
+            alert('비밀번호 재확인을 입력해주세요.')
+            return false;
+        }else if(email == ''){
+            alert('이메일을 입력해주세요.')
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/join", //요청 url
+            contentType : 'application/json',
+            data: JSON.stringify({
+                "name" : name,
+                "loginId" : loginId,
+                "password" : password,
+                "checkPassword" : checkPassword,
+                "email" : email,
+            }),
+
+            success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+
+                if(res == "notMatch"){
+                    var msg = "비밀번호가 일치하지 않습니다. 다시 확인해주세요."
+                    alert(msg);
+                }else if(res == "duplicate"){
+                    var msg = "이미 가입한 회원입니다."
+                    alert(msg);
+                }else{
+                    var msg = "회원 가입에 성공하였습니다."
+                    alert(msg);
+                    document.location.href="/login"; //alert창 확인 후 이동할 url 설정
+                }
+
+            },
+            error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                alert("통신 실패.")
+            }
+        });
+
+    });
+</script>
+</body>
 </html>

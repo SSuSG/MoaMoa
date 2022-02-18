@@ -9,8 +9,9 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter @Setter
+@Getter @Setter @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Coupon {
 
     @Id
@@ -28,26 +29,12 @@ public class Coupon {
     @JoinColumn(name = "user_id")
     private User user;
 
-    //필요없을듯?
-    @Lob
-    private String description;
-
     @Enumerated(EnumType.STRING)
     private CouponStatus couponStatus;
 
-    @Builder
-    public Coupon(Long id , String restaurantName , String menu , int discountPrice , LocalDateTime startDate , LocalDateTime endDate , CouponStatus couponStatus){
-        this.id = id;
-        this.restaurantName = restaurantName;
-        this.discountPrice = discountPrice;
-        this.menu = menu;
-        this.startDate = startDate;
-        this.endDate= endDate;
-        this.couponStatus = couponStatus;
-    }
-
     public CouponDto toDto(){
         CouponDto couponDto = CouponDto.builder()
+                .id(id)
                 .restaurantName(restaurantName)
                 .discountPrice(discountPrice)
                 .menu(menu)
@@ -69,9 +56,5 @@ public class Coupon {
     public void couponStatusUpdate(){
         this.couponStatus = CouponStatus.UNAVAILABLE;
     }
-
-
-
-
 
 }

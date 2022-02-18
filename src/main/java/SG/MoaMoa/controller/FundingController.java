@@ -36,27 +36,33 @@ public class FundingController {
 
     //admin페이지
     @GetMapping("/admin")
-    public String admin(
-            @Login User loginUser, Model model
-    ){
-        if(loginUser.getRoleType() == RoleType.ADMIN){
-            return "/admin/adminPage";
+    public String admin() {
+        return "/admin/adminPage";
+    }
+
+    //admin인지 아닌지 체크
+    @GetMapping("/admin/check")
+    @ResponseBody
+    public String adminCheck(@Login User loginUser){
+        log.info("adminCheck!!");
+        if (loginUser.getRoleType() == RoleType.ADMIN) {
+            return "success";
+        }else{
+            return "fail";
         }
-        //admin아닐시 메시지도 뿌려주기?
-        return "redirect:/";
     }
 
     //펀딩등록하기
     @GetMapping("/admin/funding")
-    public String viewRegFundingPage(@ModelAttribute FundingDto fundingDto){
+    public String viewRegFundingPage(@ModelAttribute FundingDto fundingDto) {
         log.info("FundingController : viewRegFundingPage");
         return "/admin/registerFunding";
     }
 
     //펀딩등록하기
     @PostMapping("/admin/funding")
-    public String registerFunding(@Valid @ModelAttribute FundingDto fundingDto , BindingResult bindingResult) throws IOException {
-        if(bindingResult.hasErrors())
+    public String registerFunding(@Valid @ModelAttribute FundingDto fundingDto, BindingResult bindingResult) throws IOException {
+        if (bindingResult.hasErrors())
             return "admin/registerFunding";
 
         log.info("FundingController : registerFunding");
@@ -66,14 +72,10 @@ public class FundingController {
 
     //펀딩리스트들
     @GetMapping("/fundings")
-    public String viewFundingList(
-            @Login User loginUser,
-            @RequestParam(defaultValue = "1") int page , Model model
-    ){
-
-        Pageable pageable = PageRequest.of(page-1,4);
+    public String viewFundingList(@RequestParam(defaultValue = "1") int page, Model model) {
+        Pageable pageable = PageRequest.of(page - 1, 4);
         Page<MainViewFundingDto> fundingList = fundingService.getFundings(pageable);
-        model.addAttribute("fundingList" , fundingList);
+        model.addAttribute("fundingList", fundingList);
 
         return "/funding/fundingList";
     }
@@ -81,32 +83,36 @@ public class FundingController {
     //펀딩 썸네일
     @ResponseBody
     @GetMapping("/images/{imageName}")
-    public Resource downloadImage(@PathVariable String imageName) throws
-            MalformedURLException {
-        log.info("downloadImage : {}" , imageName);
+    public Resource downloadImage(@PathVariable String imageName) throws MalformedURLException {
+        log.info("downloadImage : {}", imageName);
         return new UrlResource("file:" + imageService.getFullPath(imageName));
     }
 
     //상세 펀딩 페이지
     @GetMapping("/funding/{id}")
-    public String viewFunding(
-            @Login User loginUser,
-            @PathVariable Long id, Model model
-    ){
+    public String viewFunding(@PathVariable Long id, Model model) {
         FundingDto funding = fundingService.getFunding(id);
-        model.addAttribute("funding" , funding);
+        model.addAttribute("funding", funding);
         return "/funding/viewFunding";
     }
 
     //펀딩참가
-    @PostMapping("/funding/application/{fundingId}")
+    @ResponseBody
+    @PostMapping("/funding/application")
     public String applyFunding(
             @Login User loginUser,
-            @PathVariable Long fundingId
-    ){
-        fundingService.applyFunding(loginUser.getId() , fundingId);
-        return "redirect:/fundings";
+            @RequestParam Long fundingId
+    ) {
+        log.info("applyFunding || fundingId : {}", fundingId);
+        String response = fundingService.applyFunding(loginUser.getId(), fundingId);
+        log.info("applyFunding2");
+        return response;
     }
+
+    //검색기능
 
 
 }
+
+
+

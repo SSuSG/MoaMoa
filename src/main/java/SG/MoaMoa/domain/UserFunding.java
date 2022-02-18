@@ -5,8 +5,9 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter @Setter @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserFunding {
 
     @Id @GeneratedValue
@@ -20,13 +21,6 @@ public class UserFunding {
     @ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     @JoinColumn(name = "funding_id")
     private Funding funding;
-
-
-    @Builder
-    public UserFunding(User user , Funding funding){
-        this.user = user;
-        this.funding = funding;
-    }
 
 
 }

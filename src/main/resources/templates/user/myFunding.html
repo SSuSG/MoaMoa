@@ -6,6 +6,34 @@
 <body>
 <div th:replace="fragments/bodyHeader :: bodyHeader"/>
 
+<th:block>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">가게이름</th>
+            <th scope="col">메뉴</th>
+            <th scope="col">할인가</th>
+            <th scope="col">최소펀딩신청수</th>
+            <th scope="col">현재펀딩신청수</th>
+            <th scope="col">펀딩현재상황</th>
+            <th scope="col">펀딩성공여부</th>
+        </tr>
+        </thead>
+        <tbody th:each="funding : ${myFundingList}">
+        <tr>
+            <th scope="row" th:text="${funding.id}" ></th>
+            <td><a th:href="|/funding/${funding.id}|" th:text="${funding.restaurantName}"}></a></td>
+            <td th:text="${funding.menu}"></td>
+            <td th:text="${funding.discountPrice}"></td>
+            <td th:text="${funding.minFundingCount}"></td>
+            <td th:text="${funding.nowFundingCount}"></td>
+            <td th:text="${funding.fundingStatus}"></td>
+            <td th:text="${funding.isFundingSuccess}"></td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>
 
 <br>
 <br>

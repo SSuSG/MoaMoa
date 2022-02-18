@@ -5,6 +5,7 @@ import SG.MoaMoa.domain.Coupon;
 import SG.MoaMoa.domain.Funding;
 import SG.MoaMoa.domain.User;
 import SG.MoaMoa.domain.UserFunding;
+import SG.MoaMoa.dto.CouponDto;
 import SG.MoaMoa.repository.CouponRepository;
 import SG.MoaMoa.repository.FundingRepository;
 import SG.MoaMoa.repository.UserRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -30,7 +32,6 @@ public class CouponService {
         findCoupon.couponStatusUpdate();
     }
 
-
     //펀딩정보를 바탕으로 각 유저마다 쿠폰을 만들어주는 서비스
     @Transactional
     public void createCoupon(Funding funding){
@@ -45,4 +46,15 @@ public class CouponService {
         }
     }
 
+    //유저가 가진 쿠폰리스트
+    public List<CouponDto> getCouponList(Long userId) {
+        List<Coupon> myCouponList = userRepository.findById(userId).get().getCoupons();
+        return myCouponList.stream().map(c -> c.toDto()).collect(Collectors.toList());
+    }
+
+    //쿠폰 사용하기
+    @Transactional
+    public void useCoupon(Long couponId) {
+        couponRepository.findById(couponId).get().couponStatusUpdate();
+    }
 }

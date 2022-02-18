@@ -239,14 +239,44 @@
   </tr>
   </tbody>
 </table>
-<form th:action="|/funding/application/${funding.id}|"  method="post">
-  <button class="btn btn-primary btn-lg btn-block"  type="submit">펀딩 참가</button>
-</form>
+<button class="btn btn-primary btn-lg btn-block" id="apply_funding"  type="submit">펀딩 참가</button>
+
+<script th:inline="javascript">
+
+  /*<![CDATA[*/
+  var fundingId = [[${funding.id}]];
+
+  /*]]>*/
+
+  $('#apply_funding').click(function (){
+    $.ajax({
+      type: "post",
+      url: "/funding/application", //펀딩참가요청청
+      data: {
+        "fundingId" : fundingId
+      },
+      success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+
+        if (res == "failByDuplication"){
+          var msg = "이미 펀딩에 참여하였습니다.";
+          alert(msg);
+        }else if (res == "failByLackMoney"){
+          var msg = "펀딩에 참여할 돈이 부족합니다! 충전해주세요.";
+          alert(msg);
+        }else{ //성공
+          var msg = "펀딩참여에 성공하였습니다.";
+          document.location.href="/fundings"; //alert창 확인 후 이동할 url 설정
+        }
 
 
-<!-- Image Slider -->
+      },
+      error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+        alert("통신 실패.")
+      }
+    });
 
-<script>
+  });
+
   //slide-wrap
   var slideWrapper = document.getElementById('slider-wrap');
   //current slideIndexition

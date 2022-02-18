@@ -9,7 +9,6 @@ import SG.MoaMoa.dto.FundingDto;
 import SG.MoaMoa.dto.MainViewFundingDto;
 import SG.MoaMoa.dto.PageRequestDto;
 import SG.MoaMoa.repository.FundingRepository;
-import SG.MoaMoa.repository.ImageRepository;
 import SG.MoaMoa.repository.UserFundingRepository;
 import SG.MoaMoa.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +21,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +38,7 @@ public class FundingService {
     private final UserRepository userRepository;
     private final ImageService imageService;
     private final CouponService couponService;
+    private final EntityManager em;
 
 
     //새로운 펀딩 만들기
@@ -78,10 +79,27 @@ public class FundingService {
 
     }
 
-    //한 사람이 펀딩에 참여!!
+    //펀딩 신청 로직!!
     @Transactional
-    public void applyFunding(Long userId, Long fundingId){
+    public String applyFunding(Long userId, Long fundingId){
         Funding funding = fundingRepository.findById(fundingId).get();
+        User user = userRepository.findById(userId).get();
+        log.info("FundingService || applyFunding : hi");
+        //이 펀딩에 이미 참여한적이 있다면 실패
+        if(userFundingRepository.findUserFunding(userId,fundingId) != null){
+            //null 이 아니라는뜻은 참여한적이 있다라는 뜻
+            return "failByDuplication";
+        }
+        log.info("FundingService || applyFunding : hi2");
+        //펀딩에 참여하려면 돈이 있어야함 , 없으면 실패
+        if (user.getMoney() >= funding.getDiscountPrice()){
+            //유저가 펀딩에 참여할 돈이 있다면 돈차감
+            user.spendMoney(funding.getDiscountPrice());
+        }else{
+            //유저가 펀딩에 참여할 돈이 없다면 실패
+            return "failByLackMoney";
+        }
+        log.info("FundingService || applyFunding : hi3");
 
         //이번 신청으로 max에 도달했다면
         if(checkMaxFundingCount(fundingId)){
@@ -90,17 +108,21 @@ public class FundingService {
             //user와 funding의 연관관계 맺어줌
             addUserFunding(userId,fundingId);
 
+            //펀딩정보 최신화
+            em.flush();
             //쿠폰 발송
             couponService.createCoupon(funding);
+            return "success";
         }else{
             funding.addFundingCount();
             addUserFunding(userId,fundingId);
+            return "success";
         }
 
     }
 
 
-    //한 사람이 펀딩에 참여했을때 Funding의 userFunding 추가
+    //한 사람이 펀딩에 참여했을때 Funding에 userFunding 추가 + User에다가도 userFunding추가
     @Transactional
     public void addUserFunding(Long userId , Long fundingId){
         log.info("FundingService : addUserFunding");
@@ -114,7 +136,6 @@ public class FundingService {
 
         userFundingRepository.save(createUserFunding);
     }
-
 
 
     //이번 신청으로 펀딩이max에 도달한지

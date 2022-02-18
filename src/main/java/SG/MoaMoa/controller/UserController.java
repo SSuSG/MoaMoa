@@ -6,6 +6,7 @@ import SG.MoaMoa.dto.FindLoginIdDto;
 import SG.MoaMoa.dto.FindPasswordDto;
 import SG.MoaMoa.dto.LoginDto;
 import SG.MoaMoa.dto.UserDto;
+import SG.MoaMoa.service.CouponService;
 import SG.MoaMoa.service.UserService;
 import SG.MoaMoa.web.argumentresolver.Login;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,6 +26,7 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
+    private final CouponService couponService;
 
     //로그인
     @GetMapping("/login")
@@ -75,20 +74,58 @@ public class UserController {
     @GetMapping("/join")
     public String join(@ModelAttribute UserDto userDto){
         return "user/join";
-
     }
 
+    /*
     //회원가입
     @PostMapping("/join")
     public String joinSuccess(@Valid @ModelAttribute UserDto userDto , BindingResult bindingResult) throws Exception {
+        log.info("joinSuccess");
+        log.info("{}",userDto.getLoginId());
         if(bindingResult.hasErrors())
             return "user/join";
 
-        //회원 중복이 존재할경우
-        if(userService.join(userDto).equals("duplicate")){
-            return "redirect:/user/join";
-        }
+
+        log.info("joinSuccess2");
         return "redirect:/login";
+    }
+     */
+
+    //회원가입 , 비밀번호 일치하는지 체크 , 회원중복이 체크하는지 확인
+    @PostMapping("/join")
+    @ResponseBody
+    public String PasswordAndDuplicateUserCheckInJoin(
+            @RequestBody UserDto userDto
+    ) throws Exception {
+        log.info("PasswordAndDuplicateUserCheckInJoin : {},{}", userDto.getPassword() ,userDto.getCheckPassword() );
+
+        //비밀번호가 일치하지 않을경우
+        if(!userDto.getPassword().equals(userDto.getCheckPassword()))
+            return "notMatch";
+
+        //회원 중복이 존재할경우
+        if(userService.validateDuplicateUser(userDto.getName(),userDto.getEmail())){
+            return "duplicate";
+        }
+
+        userService.join(userDto);
+        log.info("hello");
+        return "pass";
+    }
+
+
+
+    //아이디 중복 체크
+    @GetMapping("/join/id")
+    @ResponseBody
+    public String joinIdCheck(@RequestParam String loginId){
+        log.info("joinIdCheck || loginId : {}" , loginId);
+
+        if(userService.checkLoginIdDuplicate(loginId)){
+            //아이디가 중복되었음
+            return "duplicate";
+        }
+        return "noDuplicate";
     }
 
     //아이디 찾기
@@ -139,48 +176,56 @@ public class UserController {
 
     //마이페이지
     @GetMapping("/user")
-    public String viewMyPage(
-            @Login User loginUser, Model model
-            ){
+    public String viewMyPage(@Login User loginUser, Model model){
         model.addAttribute("loginUser" , loginUser);
         return "/user/myPage";
     }
 
     //내정보
     @GetMapping("/user/myInfo")
-    public String viewMyInfo(
-            @Login User loginUser, Model model
-
-    ){
-        model.addAttribute("loginUser" , loginUser);
+    public String viewMyInfo(@Login User loginUser, Model model){
+        model.addAttribute("loginUser" , userService.getMyInfo(loginUser.getId()));
         return "/user/info";
     }
 
     //쿠폰함
     @GetMapping("/user/coupon")
-    public String viewMyCoupon(
-            @Login User loginUser, Model model
-    ){
-        model.addAttribute("loginUser" , loginUser);
+    public String viewMyCoupon(@Login User loginUser, Model model){
+        model.addAttribute("couponList" , couponService.getCouponList(loginUser.getId()));
         return "/user/coupon";
+    }
+
+    //쿠폰사용하기
+    @PostMapping("/user/coupon")
+    public String useMyCoupon(@RequestParam Long couponId){
+        couponService.useCoupon(couponId);
+        return "redirect:/user/coupon";
     }
 
     //펀딩참여내역
     @GetMapping("/user/funding")
-    public String viewMyFunding(
-            @Login User loginUser, Model model
-    ){
-        model.addAttribute("loginUser" , loginUser);
-        return "myFunding";
+    public String viewMyFunding(@Login User loginUser, Model model){
+        model.addAttribute("myFundingList" , userService.getMyFundingList(loginUser.getId()));
+        return "/user/myFunding";
     }
 
     //결제
     @GetMapping("/user/payment")
-    public String myPayment(
-            @Login User loginUser, Model model
-    ){
+    public String myPayment(@Login User loginUser, Model model){
         model.addAttribute("loginUser" , loginUser);
         return "/user/payment";
+    }
+
+    //결제성공
+    @ResponseBody
+    @PostMapping("/user/payment")
+    public String myPaymentSuccess(
+            @Login User loginUser,
+            @RequestParam int amount
+    ){
+        log.info("myPaymentSuccess ||  money : {}" , amount);
+        userService.chargeMoney(loginUser.getId() , amount);
+        return "1111";
     }
 
 

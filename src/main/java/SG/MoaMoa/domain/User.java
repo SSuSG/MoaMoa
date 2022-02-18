@@ -23,6 +23,7 @@ public class User {
     private String password;
     private String email;
     private String authenticationKey;
+    private int money;
 
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
@@ -49,6 +50,7 @@ public class User {
                 .password(password)
                 .roleType(roleType)
                 .email(email)
+                .money(money)
                 .build();
 
         return userDto;
@@ -91,4 +93,18 @@ public class User {
         else if(this.roleType == RoleType.SUBSCRIBER)
             this.roleType = RoleType.REGULAR;
     }
+    //회원가입시 초기화
+    public void join(int money , String authenticationKey , RoleType roleType){
+        this.money = 0;
+        this.authenticationKey = authenticationKey;
+        this.roleType = RoleType.ASSOCIATE;
+    }
+
+    //돈 충전
+    public void chargeMoney(int money){
+        this.money += money;
+    }
+
+    //돈 차감
+    public void spendMoney(int money){this.money -= money;}
 }

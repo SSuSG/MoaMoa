@@ -5,7 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Getter @Setter
+@Getter @Setter @Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Restaurant {
 
@@ -29,14 +30,5 @@ public class Restaurant {
     private Funding funding;
      */
 
-    @Builder
-    public Restaurant(Long id , String restaurantName , String introduction , String information ,String notice){
-        this.id = id;
-        this.restaurantName = restaurantName;
-        this.information = information;
-        this.introduction = introduction;
-        this.notice = notice;
-
-    }
 
 }

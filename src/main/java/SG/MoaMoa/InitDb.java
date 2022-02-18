@@ -241,6 +241,7 @@ public class InitDb {
                     .loginId("qwe")
                     .password("123")
                     .email("qwe@naver.com")
+                    .money(0)
                     .roleType(RoleType.ADMIN)
                     .build();
 
@@ -249,6 +250,7 @@ public class InitDb {
                     .loginId("asd")
                     .password("123")
                     .email("asd@naver.com")
+                    .money(0)
                     .roleType(RoleType.REGULAR)
                     .build();
 
@@ -257,6 +259,7 @@ public class InitDb {
                     .loginId("zxc")
                     .password("123")
                     .email("zxc@naver.com")
+                    .money(0)
                     .roleType(RoleType.REGULAR)
                     .build();
 

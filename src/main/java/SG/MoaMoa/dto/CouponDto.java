@@ -3,6 +3,7 @@ package SG.MoaMoa.dto;
 
 
 import SG.MoaMoa.domain.CouponStatus;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,10 +11,12 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 
-@Getter
+@Getter @Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class CouponDto {
 
+    private Long id;
     private String restaurantName;
     private String menu;
     private LocalDateTime startDate;
@@ -34,14 +37,4 @@ public class CouponDto {
     }
     */
 
-
-    @Builder
-    public CouponDto(String restaurantName , String menu , int discountPrice , LocalDateTime startDate , LocalDateTime endDate , CouponStatus couponStatus){
-        this.restaurantName = restaurantName;
-        this.discountPrice = discountPrice;
-        this.menu = menu;
-        this.startDate = startDate;
-        this.endDate= endDate;
-        this.couponStatus = couponStatus;
-    }
 }

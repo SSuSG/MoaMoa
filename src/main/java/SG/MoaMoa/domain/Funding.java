@@ -3,9 +3,7 @@ package SG.MoaMoa.domain;
 
 import SG.MoaMoa.dto.FundingDto;
 import SG.MoaMoa.dto.MainViewFundingDto;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,6 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Funding {
 
@@ -47,7 +46,6 @@ public class Funding {
     private Restaurant restaurant;
     */
 
-    @Builder.Default
     @OneToMany(mappedBy = "funding")
     private List<UserFunding> userFundings = new ArrayList<>();
 
@@ -59,9 +57,6 @@ public class Funding {
 
     @Enumerated(EnumType.STRING)
     private IsFundingSuccess isFundingSuccess; // 기간안에 달성 or 실패
-
-    public Funding() {
-    }
 
 
     public FundingDto toDto(){
@@ -80,6 +75,7 @@ public class Funding {
                 .maxFundingCount(maxFundingCount)
                 .nowFundingCount(nowFundingCount)
                 .startDate(startDate)
+                .isFundingSuccess(isFundingSuccess)
                 .endDate(endDate)
                 .build();
 

@@ -4,6 +4,7 @@ package SG.MoaMoa.dto;
 import SG.MoaMoa.domain.Funding;
 import SG.MoaMoa.domain.FundingStatus;
 import SG.MoaMoa.domain.Image;
+import SG.MoaMoa.domain.IsFundingSuccess;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -55,6 +56,9 @@ public class FundingDto {
     @Enumerated(EnumType.STRING)
     private FundingStatus fundingStatus;
 
+    @Enumerated(EnumType.STRING)
+    private IsFundingSuccess isFundingSuccess;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime startDate;
 
@@ -76,6 +80,7 @@ public class FundingDto {
                 .minFundingCount(minFundingCount)
                 .nowFundingCount(0)
                 .fundingStatus(FundingStatus.READY)
+                .isFundingSuccess(IsFundingSuccess.UNDECIDED)
                 .startDate(startDate)
                 .endDate(endDate)
                 .build();

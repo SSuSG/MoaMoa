@@ -38,19 +38,14 @@ public class UserService {
     public String join(UserDto userDto) throws Exception {
         log.info("UserService : join");
 
-        //회원 중복체크 (이름+이메일)
-        if(validateDuplicateUser(userDto)){
-            return "duplicate";
-        }
-
         //인증키를 만들고 이메일 보내기
         String email = userDto.getEmail();
         String authenticationKey = createKey();
         sendSimpleMessage(email,authenticationKey);
 
         User user = userDto.toEntity();
-        user.setAuthenticationKey(authenticationKey);
-        user.setRoleType(RoleType.ASSOCIATE);
+        //회원가입시 초기화할 정보들
+        user.join(0,authenticationKey,RoleType.ASSOCIATE);
         userRepository.save(user);
         return "success";
     }
@@ -181,8 +176,8 @@ public class UserService {
     }
 
     //회원중복체크 -> 이름+이메일
-    public boolean validateDuplicateUser(UserDto userDto){
-        Optional<User> findUser = userRepository.findByNameAndEmail(userDto.getName(), userDto.getEmail());
+    public boolean validateDuplicateUser(String name , String email){
+        Optional<User> findUser = userRepository.findByNameAndEmail(name, email);
         if(findUser.isPresent()){
             return true;
             //throw new IllegalStateException("이미 존재하는 회원입니다.");
@@ -190,11 +185,6 @@ public class UserService {
         return false;
     }
 
-    //자기가 가진 쿠폰들
-    public List<CouponDto> getCouponList(Long id){
-        return userRepository.findById(id).get().getCoupons()
-                .stream().map(c -> c.toDto()).collect(Collectors.toList());
-    }
 
     //펀딩중복참여 체크
     public void validateDuplicateFunding(Long id , Funding funding){
@@ -209,23 +199,24 @@ public class UserService {
         }
     }
 
-    //내정보 페이지에 내정보 제공
-    public UserDto getUserInformation(Long id){
-        User user = userRepository.findById(id).get();
-        UserDto userDto = user.toDto();
-        return userDto;
-    }
 
     //내정보 페이지에 펀딩참여내역 제공
-    public List<FundingDto> getFundingList(String loginId) {
-        List<UserFunding> userFundings = userRepository.findByLoginId(loginId).get().getUserFundings();
-        List<FundingDto> fundingDtoList = new ArrayList<>();
-        for (UserFunding userFunding : userFundings) {
-            fundingDtoList.add(userFunding.getFunding().toDto());
-            log.info("Funding : {}" , userFunding.getFunding().getRestaurantName());
-            log.info("Funding : {}" , userFunding.getFunding().getMenu());
-        }
-        return fundingDtoList;
+    public List<FundingDto> getMyFundingList(Long userId) {
+        List<UserFunding> userFundingList = userRepository.findById(userId).get().getUserFundings();
+        return userFundingList.stream()
+                .map( userFunding -> userFunding.getFunding().toDto())
+                .collect(Collectors.toList());
+    }
 
+    //돈 충전
+    @Transactional
+    public void chargeMoney(Long id, int money) {
+        User user = userRepository.findById(id).get();
+        user.chargeMoney(money);
+    }
+
+    //내 정보 return
+    public UserDto getMyInfo(Long userId) {
+        return userRepository.findById(userId).get().toDto();
     }
 }
