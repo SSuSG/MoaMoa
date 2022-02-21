@@ -36,7 +36,7 @@ public class User {
 
     @OneToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     @JoinColumn(name = "subscription_id")
-    private Subscription mySubscription;
+    private Subscription subscription;
 
     @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
     private List<UserFunding> userFundings = new ArrayList<>();
@@ -68,7 +68,7 @@ public class User {
     }
 
     public void setSubscription(Subscription subscription) {
-        this.mySubscription = subscription;
+        this.subscription = subscription;
         subscription.setSubscriber(this);
     }
 
@@ -87,7 +87,7 @@ public class User {
 
     //구독결제를 하면 roleType udpate
     //구독결제를 취소하면 roleType update
-    public void updateRoleTypeForPayment(){
+    public void updateRoleTypeForSubscription(){
         if(this.roleType == RoleType.REGULAR)
             this.roleType = RoleType.SUBSCRIBER;
         else if(this.roleType == RoleType.SUBSCRIBER)
@@ -103,6 +103,11 @@ public class User {
     //돈 충전
     public void chargeMoney(int money){
         this.money += money;
+    }
+
+    //환불 받을때
+    public void refundMoney(int money){
+        this.money = money;
     }
 
     //돈 차감

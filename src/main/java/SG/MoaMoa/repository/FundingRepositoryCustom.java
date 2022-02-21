@@ -12,6 +12,8 @@ public interface FundingRepositoryCustom {
     Slice<Funding> findAllCustom(Pageable pageable);
     Page<Funding> findProceedingFundingByPaging(Pageable pageable);
     Page<Funding> findReadyFundingByPaging(Pageable pageable);
+    List<Funding> searchFunding(String searchName);
+    boolean isExistFundingName(String searchName);
 
     List<Funding> findProceedingFunding();
     List<Funding> findReadyFunding();

@@ -10,11 +10,15 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" id="admin_check" href="/admin">Admin</a></li>
+                    <li class="nav-item"><a class="nav-link" id="admin_check"> Admin</a></li>
                     <li class="nav-item"><a class="nav-link" href="/fundings">Restaurant</a></li>
                     <li class="nav-item"><a class="nav-link" href="/boards">FAQ</a></li>
                     <li class="nav-item"><a class="nav-link" href="/user">MyPage</a></li>
                     <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" >
+                        <input type="text"  class="form-control" id="searchName" placeholder="Search" aria-label="Search">
+                    </form>
+                    <button class="btn btn-primary btn-sm btn-block" type="submit" id="searchButton">검색</button>
                 </ul>
             </div>
         </div>
@@ -31,16 +35,42 @@
     </header>
 
     <script th:inline="javascript">
+
+        $('#searchButton').click(function (){
+            var searchName = $("#searchName").val();
+
+            $.ajax({
+                type: "GET",
+                url: "/funding/exist", //요청 url
+                data : {
+                    "searchName" : searchName
+                },
+                success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                    if (res == "success"){
+                        document.location.href = "/funding/search?searchName="+searchName
+                    }else{
+                        alert("입력하신내용과 일치하는 펀딩이 존재하지 않습니다.")
+                    }
+
+                },
+                error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                    alert("통신 실패.")
+                }
+            });
+
+        });
+
+
+
         $('#admin_check').click(function (){
             $.ajax({
                 type: "get",
-                url: "/admin/check", //펀딩참가요청청
+                url: "/admin/check", //펀딩참가요청
 
                 success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
                     if(res == "fail"){
                         var msg = "운영자만 사용할수 있는 페이지입니다."
                         alert(msg);
-                        document.location.href="/"; //alert창 확인 후 이동할 url 설정
                     }else{
                         document.location.href="/admin"; //alert창 확인 후 이동할 url 설정
                     }

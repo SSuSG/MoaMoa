@@ -2,10 +2,7 @@ package SG.MoaMoa.controller;
 
 import SG.MoaMoa.SessionConst;
 import SG.MoaMoa.domain.User;
-import SG.MoaMoa.dto.FindLoginIdDto;
-import SG.MoaMoa.dto.FindPasswordDto;
-import SG.MoaMoa.dto.LoginDto;
-import SG.MoaMoa.dto.UserDto;
+import SG.MoaMoa.dto.*;
 import SG.MoaMoa.service.CouponService;
 import SG.MoaMoa.service.UserService;
 import SG.MoaMoa.web.argumentresolver.Login;
@@ -94,9 +91,7 @@ public class UserController {
     //회원가입 , 비밀번호 일치하는지 체크 , 회원중복이 체크하는지 확인
     @PostMapping("/join")
     @ResponseBody
-    public String PasswordAndDuplicateUserCheckInJoin(
-            @RequestBody UserDto userDto
-    ) throws Exception {
+    public String PasswordAndDuplicateUserCheckInJoin(@RequestBody UserDto userDto) throws Exception {
         log.info("PasswordAndDuplicateUserCheckInJoin : {},{}", userDto.getPassword() ,userDto.getCheckPassword() );
 
         //비밀번호가 일치하지 않을경우
@@ -127,6 +122,34 @@ public class UserController {
         }
         return "noDuplicate";
     }
+
+    //이메일 인증페이지
+    @GetMapping("/email")
+    public String emailAuthenticatePage(
+            @RequestParam(required = false) String redirectURL,
+            Model model
+    ){
+        model.addAttribute("redirectURL" ,redirectURL );
+        return "/user/email";
+    }
+
+    //이메일 인증
+    @PostMapping("/email")
+    @ResponseBody
+    public String emailAuthenticate(
+            @Login User loginUser,
+            @RequestBody AuthenticationKeyDto authenticationKey
+            ){
+        log.info("emailAuthenticate : {}", authenticationKey.getAuthenticationKey());
+        if(userService.IsEqualAuthenticationKey(loginUser.getId() , authenticationKey.getAuthenticationKey())){
+            //인증성공!
+            return "success";
+
+        }
+        //인증실패
+        return "fail";
+    }
+
 
     //아이디 찾기
     @GetMapping("/find/loginId")
@@ -228,6 +251,23 @@ public class UserController {
         return "1111";
     }
 
+    //구독하기
+    @GetMapping("/user/subscription")
+    public String mySubscriptionPage(){
+        return "/user/subscription";
+    }
+
+    //구독하기
+    @PostMapping("/user/subscription")
+    @ResponseBody
+    public String mySubscription(@Login User loginUser){
+
+        //참이면 구독성공
+        if(userService.subscription(loginUser.getId()))
+            return "success";
+        else
+            return "fail";
+    }
 
 
 }

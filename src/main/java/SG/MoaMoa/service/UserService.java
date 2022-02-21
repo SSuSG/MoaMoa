@@ -1,10 +1,7 @@
 package SG.MoaMoa.service;
 
 
-import SG.MoaMoa.domain.Funding;
-import SG.MoaMoa.domain.RoleType;
-import SG.MoaMoa.domain.User;
-import SG.MoaMoa.domain.UserFunding;
+import SG.MoaMoa.domain.*;
 import SG.MoaMoa.dto.*;
 import SG.MoaMoa.repository.FundingRepository;
 import SG.MoaMoa.repository.UserRepository;
@@ -70,7 +67,7 @@ public class UserService {
 
         String msgg="";
         msgg+= "<div style='margin:100px;'>";
-        msgg+= "<h1> 안녕하세요 Ace입니다. </h1>";
+        msgg+= "<h1> 안녕하세요 MoaMoaFunding입니다. </h1>";
         msgg+= "<br>";
         msgg+= "<p>아래 코드를 회원가입 창으로 돌아가 입력해주세요<p>";
         msgg+= "<br>";
@@ -185,21 +182,6 @@ public class UserService {
         return false;
     }
 
-
-    //펀딩중복참여 체크
-    public void validateDuplicateFunding(Long id , Funding funding){
-        Optional<User> findUser = userRepository.findById(id);
-        User user = findUser.get();
-        List<UserFunding> userFundings = user.getUserFundings();
-
-        for (UserFunding userFunding : userFundings) {
-            if(userFunding.getFunding().getId() == funding.getId()){ //내가 참여할려고한 펀딩이 이미 참여해있는 펀딩이라면
-                throw new IllegalStateException("이미 참여한 펀딩입니다.");
-            }
-        }
-    }
-
-
     //내정보 페이지에 펀딩참여내역 제공
     public List<FundingDto> getMyFundingList(Long userId) {
         List<UserFunding> userFundingList = userRepository.findById(userId).get().getUserFundings();
@@ -218,5 +200,24 @@ public class UserService {
     //내 정보 return
     public UserDto getMyInfo(Long userId) {
         return userRepository.findById(userId).get().toDto();
+    }
+
+    //구독하기!!
+    @Transactional
+    public boolean subscription(Long userId) {
+        User user = userRepository.findById(userId).get();
+
+        //구독비(5000)가 없으면 구독 실패
+        if(user.getMoney() < 5000){
+            return false;
+        }
+        //유저의 roleType update , 돈 차감
+        user.updateRoleTypeForSubscription();
+        user.spendMoney(5000);
+
+        //연관관계 메소드
+        Subscription subscription = Subscription.createSubscription();
+        user.setSubscription(subscription);
+        return true;
     }
 }

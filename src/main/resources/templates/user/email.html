@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head th:replace="fragments/header :: header" />
+</head>
+<body>
+<div th:replace="fragments/bodyHeaderNlogin :: bodyHeaderNlogin"/>
+<div class="container">
+    <div class="input-form-background row">
+        <div class="input-form col-md-12 mx-auto">
+            <h4 class="mb-3">이메일 인증</h4>
+            <div class="mb-3">
+                <label for="authenticationKey">인증키</label>
+                <input type="text" class="form-control" id="authenticationKey" placeholder="AuthenticationKey">
+            </div>
+            <button class="btn btn-primary btn-lg btn-block" type="submit" id="email">이메일 인증</button>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+    var redirectURL = [[${redirectURL}]];
+
+    /*]]>*/
+
+    $('#email').click(function (){
+        var authenticationKey = $("#authenticationKey").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/email", //요청 url
+            contentType : 'application/json',
+            data : JSON.stringify({
+                "authenticationKey" : authenticationKey
+            }),
+            success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                if(res == "success"){
+                    var msg = "인증성공"
+                    alert(msg);
+
+                    document.location.href=redirectURL;
+                }else{
+                    var msg = "인증실패 , 다시 입력해주세요."
+                    alert(msg);
+                    return false
+                }
+
+            },
+            error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                alert("통신 실패.")
+            }
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

@@ -209,7 +209,11 @@
     <th>원래 가격</th>
     <td th:text="${funding.price}"></td>
   </tr>
-  <tr>
+  <tr th:if="${loginUser.roleType.toString().equals('SUBSCRIBER')}">
+    <th>할인 가격</th>
+    <td th:text="${funding.price}*(8/10)"></td>
+  </tr>
+  <tr th:if="${loginUser.roleType.toString().equals('REGULAR')}">
     <th>할인 가격</th>
     <td th:text="${funding.discountPrice}"></td>
   </tr>

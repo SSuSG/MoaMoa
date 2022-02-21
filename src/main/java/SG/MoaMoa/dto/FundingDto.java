@@ -70,7 +70,7 @@ public class FundingDto {
                 .restaurantName(restaurantName)
                 .menu(menu)
                 .price(price)
-                .discountPrice(discountPrice)
+                .discountPrice(price*(9/10))
                 .information(information)
                 .introduction(introduction)
                 .notice(notice)

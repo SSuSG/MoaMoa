@@ -1,10 +1,7 @@
 package SG.MoaMoa.service;
 
 
-import SG.MoaMoa.domain.Funding;
-import SG.MoaMoa.domain.Image;
-import SG.MoaMoa.domain.User;
-import SG.MoaMoa.domain.UserFunding;
+import SG.MoaMoa.domain.*;
 import SG.MoaMoa.dto.FundingDto;
 import SG.MoaMoa.dto.MainViewFundingDto;
 import SG.MoaMoa.dto.PageRequestDto;
@@ -92,13 +89,27 @@ public class FundingService {
         }
         log.info("FundingService || applyFunding : hi2");
         //펀딩에 참여하려면 돈이 있어야함 , 없으면 실패
-        if (user.getMoney() >= funding.getDiscountPrice()){
-            //유저가 펀딩에 참여할 돈이 있다면 돈차감
-            user.spendMoney(funding.getDiscountPrice());
-        }else{
-            //유저가 펀딩에 참여할 돈이 없다면 실패
-            return "failByLackMoney";
+        //구독자와 아닌자의 결제금액은 다름
+        if(user.getRoleType() == RoleType.SUBSCRIBER){
+            if (user.getMoney() >= funding.getPrice()*(8/10)){
+                //유저가 펀딩에 참여할 돈이 있다면 돈차감
+                user.spendMoney(funding.getPrice()*(8/10));
+            }else{
+                //유저가 펀딩에 참여할 돈이 없다면 실패
+                return "failByLackMoney";
+            }
+
+        }else if (user.getRoleType() == RoleType.REGULAR){
+            if (user.getMoney() >= funding.getDiscountPrice()){
+                //유저가 펀딩에 참여할 돈이 있다면 돈차감
+                user.spendMoney(funding.getDiscountPrice());
+            }else{
+                //유저가 펀딩에 참여할 돈이 없다면 실패
+                return "failByLackMoney";
+            }
         }
+
+
         log.info("FundingService || applyFunding : hi3");
 
         //이번 신청으로 max에 도달했다면
@@ -121,6 +132,15 @@ public class FundingService {
 
     }
 
+    //펀딩이 실패했을경우 환불로직
+    @Transactional
+    public void refundByFundingFail(Long fundingId){
+        Funding funding = fundingRepository.findById(fundingId).get();
+        //펀딩에 참여한 유저들에게 환불해줘야함
+        for (UserFunding userFunding : funding.getUserFundings()) {
+            userFunding.getUser().refundMoney(funding.getDiscountPrice());
+        }
+    }
 
     //한 사람이 펀딩에 참여했을때 Funding에 userFunding 추가 + User에다가도 userFunding추가
     @Transactional
@@ -165,7 +185,7 @@ public class FundingService {
                 if (funding.checkMinFunding() == true) { //min을 넘겼다면
                     couponService.createCoupon(funding);
                 } else { //min을 못넘겼다면 , 유저에게 환불해줘야함
-
+                    refundByFundingFail(funding.getId());
                 }
             }
         }
@@ -185,4 +205,15 @@ public class FundingService {
         }
     }
 
+    //펀딩 검색
+    public List<FundingDto> searchFundingName(String searchName) {
+        return fundingRepository.searchFunding(searchName)
+                .stream().map(f -> f.toDto()).collect(Collectors.toList());
+    }
+
+    //검색한 펀딩이 존재하는지
+    public boolean isExistFundingName(String searchName){
+        //존재하면  true 리턴
+        return fundingRepository.isExistFundingName(searchName);
+    }
 }

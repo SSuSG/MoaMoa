@@ -93,6 +93,7 @@ public class Funding {
         return MainViewFundingDto.builder()
                 .id(id)
                 .price(price)
+                .menu(menu)
                 .discountPrice(discountPrice)
                 .restaurantName(restaurantName)
                 .mainImageFileName(mainImageFileName)

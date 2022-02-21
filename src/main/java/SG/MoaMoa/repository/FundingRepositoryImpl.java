@@ -80,6 +80,24 @@ public class FundingRepositoryImpl implements FundingRepositoryCustom {
     }
 
     @Override
+    public List<Funding> searchFunding(String searchName) {
+        return queryFactory
+                .selectFrom(funding)
+                .where(funding.restaurantName.contains(searchName))
+                .fetch();
+
+    }
+
+    //존재하면 참 리턴
+    @Override
+    public boolean isExistFundingName(String searchName) {
+        return !(queryFactory
+                .selectFrom(funding)
+                .where(funding.restaurantName.contains(searchName))
+                .fetch().isEmpty());
+    }
+
+    @Override
     public List<Funding> findProceedingFunding() {
         return queryFactory
                 .selectFrom(funding)

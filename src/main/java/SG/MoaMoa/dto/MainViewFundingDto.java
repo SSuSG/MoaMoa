@@ -11,6 +11,7 @@ public class MainViewFundingDto {
 
     private Long id;
     private String restaurantName;
+    private String menu;
     private Integer discountPrice;
     private Integer price;
     private String mainImageFileName;

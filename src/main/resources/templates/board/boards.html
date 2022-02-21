@@ -19,9 +19,9 @@
         </thead>
         <tbody th:each="board : ${boardList}">
         <tr>
-            <th scope="row" th:text="${board.getId()}" ></th>
-            <td><a th:href="|/board/${board.getId()}|" th:text="${board.getTitle()}"}></a></td>
-            <td th:text="${board.getWriter()}"></td>
+            <th scope="row" th:text="${board.id}" ></th>
+            <td><a th:href="|/board/${board.getId()}|" th:text="${board.title}"}></a></td>
+            <td th:text="${board.writer}"></td>
             <td th:text="${#temporals.format(board.createdDate,'yyyy-MM-dd HH:mm')}"></td>
         </tr>
         </tbody>

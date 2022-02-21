@@ -16,7 +16,7 @@ public class Subscription {
     @Column(name = "subscription_id")
     private Long id;
 
-    @OneToOne(mappedBy = "mySubscription", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "subscription", fetch = FetchType.LAZY)
     private User subscriber;
 
     private LocalDateTime startDate;

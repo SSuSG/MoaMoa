@@ -4,6 +4,7 @@ import SG.MoaMoa.domain.RoleType;
 import SG.MoaMoa.domain.User;
 import SG.MoaMoa.dto.FundingDto;
 import SG.MoaMoa.dto.MainViewFundingDto;
+import SG.MoaMoa.dto.SearchDto;
 import SG.MoaMoa.service.FundingService;
 import SG.MoaMoa.service.ImageService;
 import SG.MoaMoa.web.argumentresolver.Login;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -90,8 +92,10 @@ public class FundingController {
 
     //상세 펀딩 페이지
     @GetMapping("/funding/{id}")
-    public String viewFunding(@PathVariable Long id, Model model) {
+    public String viewFunding(@Login User loginUser , @PathVariable Long id, Model model) {
+
         FundingDto funding = fundingService.getFunding(id);
+        model.addAttribute("loginUser" , loginUser);
         model.addAttribute("funding", funding);
         return "/funding/viewFunding";
     }
@@ -110,6 +114,24 @@ public class FundingController {
     }
 
     //검색기능
+    @GetMapping("/funding/search")
+    public String searchFunding(@RequestParam String searchName , Model model){
+        log.info("searchFunding : {} ", searchName);
+        model.addAttribute("searchFundingList",fundingService.searchFundingName(searchName));
+        return "/funding/searchFundingList";
+    }
+
+    //검색기능
+    @GetMapping("/funding/exist")
+    @ResponseBody
+    public String isExistFunding(@RequestParam String searchName){
+        log.info("isExistFunding : {} ", searchName);
+        if(fundingService.isExistFundingName(searchName))
+            return "success";
+        else
+            return "fail";
+
+    }
 
 
 }
