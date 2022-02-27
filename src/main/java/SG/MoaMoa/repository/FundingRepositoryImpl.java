@@ -7,6 +7,7 @@ import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -18,7 +19,7 @@ import java.util.List;
 
 import static SG.MoaMoa.domain.QFunding.funding;
 
-
+@Slf4j
 @RequiredArgsConstructor
 public class FundingRepositoryImpl implements FundingRepositoryCustom {
 
@@ -50,15 +51,23 @@ public class FundingRepositoryImpl implements FundingRepositoryCustom {
 
     @Override
     public Page<Funding> findProceedingFundingByPaging(Pageable pageable){
+        log.info("offset : {}" , pageable.getOffset());
+
         List<Funding> content = queryFactory
                 .selectFrom(funding)
                 .where(funding.fundingStatus.eq(FundingStatus.PROCEEDING))
+                .orderBy(funding.restaurantName.asc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
 
         JPAQuery<Long> count = queryFactory
                 .select(funding.count())
                 .from(funding)
                 .where(funding.fundingStatus.eq(FundingStatus.PROCEEDING));
+
+
+        System.out.println("count.fetchOne() = " + count.fetchOne());
 
         return PageableExecutionUtils.getPage(content,pageable, count::fetchOne);
     }
@@ -75,6 +84,8 @@ public class FundingRepositoryImpl implements FundingRepositoryCustom {
                 .select(funding.count())
                 .from(funding)
                 .where(funding.fundingStatus.eq(FundingStatus.READY));
+
+        System.out.println("count.fetchOne() = " + count.fetchOne());
 
         return PageableExecutionUtils.getPage(content,pageable, count::fetchOne);
     }

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 public class LoginMemberArgumentResolver implements
         HandlerMethodArgumentResolver {
+
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         log.info("supportsParameter 실행");
@@ -35,6 +36,6 @@ public class LoginMemberArgumentResolver implements
         if (session == null) {
             return null;
         }
-        return session.getAttribute(SessionConst.LOGIN_MEMBER);
+        return session.getAttribute(SessionConst.LOGIN_USER);
     }
 }

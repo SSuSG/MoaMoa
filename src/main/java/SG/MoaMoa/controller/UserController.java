@@ -50,7 +50,7 @@ public class UserController {
         }
 
         HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_MEMBER , loginUser);
+        session.setAttribute(SessionConst.LOGIN_USER , loginUser);
         if(redirectUrl==null)
             return "redirect:/";
         else
@@ -260,13 +260,18 @@ public class UserController {
     //구독하기
     @PostMapping("/user/subscription")
     @ResponseBody
-    public String mySubscription(@Login User loginUser){
+    public String mySubscription(@Login User loginUser , HttpServletRequest request){
 
         //참이면 구독성공
-        if(userService.subscription(loginUser.getId()))
+        if(userService.subscription(loginUser.getId())){
+            //로그인 유저 최신화
+            HttpSession session = request.getSession();
+            session.removeAttribute(SessionConst.LOGIN_USER);
+            session.setAttribute(SessionConst.LOGIN_USER , userService.getLoginUser(loginUser.getId()));
             return "success";
-        else
+        } else {
             return "fail";
+        }
     }
 
 

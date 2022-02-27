@@ -4,11 +4,11 @@ import SG.MoaMoa.domain.RoleType;
 import SG.MoaMoa.domain.User;
 import SG.MoaMoa.dto.FundingDto;
 import SG.MoaMoa.dto.MainViewFundingDto;
-import SG.MoaMoa.dto.SearchDto;
+import SG.MoaMoa.dto.CreateReviewDto;
 import SG.MoaMoa.service.FundingService;
 import SG.MoaMoa.service.ImageService;
+import SG.MoaMoa.service.ReviewService;
 import SG.MoaMoa.web.argumentresolver.Login;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -16,8 +16,6 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -35,6 +32,7 @@ public class FundingController {
 
     private final FundingService fundingService;
     private final ImageService imageService;
+    private final ReviewService reviewService;
 
     //admin페이지
     @GetMapping("/admin")
@@ -72,11 +70,14 @@ public class FundingController {
         return "redirect:/admin";
     }
 
+
+
     //펀딩리스트들
     @GetMapping("/fundings")
     public String viewFundingList(@RequestParam(defaultValue = "1") int page, Model model) {
         Pageable pageable = PageRequest.of(page - 1, 4);
         Page<MainViewFundingDto> fundingList = fundingService.getFundings(pageable);
+        log.info("PageSize : {} " , fundingList.getPageable().getPageSize());
         model.addAttribute("fundingList", fundingList);
 
         return "/funding/fundingList";
@@ -92,12 +93,22 @@ public class FundingController {
 
     //상세 펀딩 페이지
     @GetMapping("/funding/{id}")
-    public String viewFunding(@Login User loginUser , @PathVariable Long id, Model model) {
+    public String viewFunding(@Login User loginUser , @PathVariable Long id,Model model) {
 
-        FundingDto funding = fundingService.getFunding(id);
+        model.addAttribute("reviewList" , fundingService.getReviewList(id));
         model.addAttribute("loginUser" , loginUser);
-        model.addAttribute("funding", funding);
+        model.addAttribute("funding", fundingService.getFunding(id));
         return "/funding/viewFunding";
+    }
+
+    //리뷰등록
+    @PostMapping("/review")
+    @ResponseBody
+    public String registerReview(@Login User loginUser , @RequestBody CreateReviewDto createReviewDto){
+        if(reviewService.createReview(createReviewDto , loginUser.getId()))
+            return "success";
+        else
+            return "fail";
     }
 
     //펀딩참가

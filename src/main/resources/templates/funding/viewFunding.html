@@ -5,6 +5,39 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    #form-commentInfo{
+      width: 100%;
+      text-align: center;
+    }
+    #comment-count{
+      margin-bottom: 10px;
+    }
+    #content{
+      width: 50%;
+      height: 3.3em;
+    }
+    #regReview{
+      background-color: rgb(0, 128,255);
+      width: 5.5em; height: 3.3em;
+      font-size: 15px;
+      font-weight: bold;
+      color: aliceblue;
+    }
+    #funding-table{
+      margin-left:auto;
+      margin-right:auto;
+      width : 450px;
+      table-layout : fixed;
+      word-break : break-all;
+      height : auto;
+    }
+    #apply_funding{
+      margin:auto;
+      display:block;
+    }
+
+
+
     /*GLOBALS*/
     *{margin:0; padding:0; list-style:none;}
     body, hmtl{background: #ecf0f1;}
@@ -132,9 +165,8 @@
       opacity:0.5;
       position:relative;
       top:0;
-
-
     }
+
 
     #pagination-wrap ul li.active{
       width:12px;
@@ -194,7 +226,7 @@
 
 <br>
 <br>
-<table class ="table table-bordered">
+<table class ="table table-bordered" id="funding-table">
   <tbody>
   <tr>
     <th>가게이름</th>
@@ -243,14 +275,49 @@
   </tr>
   </tbody>
 </table>
-<button class="btn btn-primary btn-lg btn-block" id="apply_funding"  type="submit">펀딩 참가</button>
+<button class="btn btn-primary btn-lg" id="apply_funding"  type="button">펀딩 참가</button>
+<br>
+<br>
+<div id="form-commentInfo">
+  <div id="comment-count">리뷰</div>
+  <input id="content" placeholder="리뷰를 입력해 주세요.">
+  <button id="regReview">등록</button>
+</div>
+
 
 <script th:inline="javascript">
 
   /*<![CDATA[*/
   var fundingId = [[${funding.id}]];
-
   /*]]>*/
+
+  $('#regReview').click(function (){
+    var content = $("#content").val();
+
+    $.ajax({
+      type: "post",
+      url: "/review",
+      contentType : 'application/json',
+      data: JSON.stringify({
+        "content" : content,
+        "fundingId" : fundingId
+      }),
+      success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+        if(res == "fail"){
+            var msg = "리뷰 작성에 실패했습니다! 다시 시도해주세요."
+            alert(msg)
+        }else{
+          document.location.href="/funding/"+fundingId;
+        }
+
+      },
+      error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+        alert("통신 실패.")
+      }
+    });
+
+  });
+
 
   $('#apply_funding').click(function (){
     $.ajax({
@@ -261,7 +328,13 @@
       },
       success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
 
-        if (res == "failByDuplication"){
+        if(res == "CLOSE"){
+          var msg = "펀딩이 이미 종료되었습니다.";
+          alert(msg);
+        }else if(res == 'READY'){
+          var msg = "펀딩이 아직 시작되지 않았습니다.";
+          alert(msg);
+        } else if (res == "failByDuplication"){
           var msg = "이미 펀딩에 참여하였습니다.";
           alert(msg);
         }else if (res == "failByLackMoney"){
@@ -269,6 +342,7 @@
           alert(msg);
         }else{ //성공
           var msg = "펀딩참여에 성공하였습니다.";
+          alert(msg);
           document.location.href="/fundings"; //alert창 확인 후 이동할 url 설정
         }
 

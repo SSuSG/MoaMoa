@@ -52,6 +52,9 @@ public class Funding {
     @OneToMany(mappedBy = "funding" , cascade = CascadeType.ALL)
     private List<Image> imageList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Review> reviewList = new ArrayList<>();
+
     @Enumerated(EnumType.STRING)
     private FundingStatus fundingStatus; // 진행중 or 마감
 
@@ -96,6 +99,7 @@ public class Funding {
                 .menu(menu)
                 .discountPrice(discountPrice)
                 .restaurantName(restaurantName)
+                .fundingStatus(fundingStatus)
                 .mainImageFileName(mainImageFileName)
                 .build();
 

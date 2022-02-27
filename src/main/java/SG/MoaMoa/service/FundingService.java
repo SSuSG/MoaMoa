@@ -5,6 +5,7 @@ import SG.MoaMoa.domain.*;
 import SG.MoaMoa.dto.FundingDto;
 import SG.MoaMoa.dto.MainViewFundingDto;
 import SG.MoaMoa.dto.PageRequestDto;
+import SG.MoaMoa.dto.ReviewDto;
 import SG.MoaMoa.repository.FundingRepository;
 import SG.MoaMoa.repository.UserFundingRepository;
 import SG.MoaMoa.repository.UserRepository;
@@ -72,8 +73,7 @@ public class FundingService {
 
     //펀딩리스트들 넘겨주기
     public Page<MainViewFundingDto> getFundings(Pageable pageable){
-        return fundingRepository.findAll(pageable).map(f -> f.toMainViewDto());
-
+        return fundingRepository.findProceedingFundingByPaging(pageable).map(f -> f.toMainViewDto());
     }
 
     //펀딩 신청 로직!!
@@ -81,19 +81,27 @@ public class FundingService {
     public String applyFunding(Long userId, Long fundingId){
         Funding funding = fundingRepository.findById(fundingId).get();
         User user = userRepository.findById(userId).get();
-        log.info("FundingService || applyFunding : hi");
+
+        //펀딩이 끝났거나 아직 시작하지 않았다면
+        if(funding.getFundingStatus() == FundingStatus.CLOSE){
+            return "CLOSE";
+        }else if(funding.getFundingStatus() == FundingStatus.READY){
+            return "READY";
+        }
+
         //이 펀딩에 이미 참여한적이 있다면 실패
         if(userFundingRepository.findUserFunding(userId,fundingId) != null){
             //null 이 아니라는뜻은 참여한적이 있다라는 뜻
             return "failByDuplication";
         }
-        log.info("FundingService || applyFunding : hi2");
+
         //펀딩에 참여하려면 돈이 있어야함 , 없으면 실패
         //구독자와 아닌자의 결제금액은 다름
         if(user.getRoleType() == RoleType.SUBSCRIBER){
-            if (user.getMoney() >= funding.getPrice()*(8/10)){
+            if (user.getMoney() >= funding.getPrice()*(0.8)){
+
                 //유저가 펀딩에 참여할 돈이 있다면 돈차감
-                user.spendMoney(funding.getPrice()*(8/10));
+                user.spendMoney((int)(funding.getPrice()*(0.8)));
             }else{
                 //유저가 펀딩에 참여할 돈이 없다면 실패
                 return "failByLackMoney";
@@ -109,8 +117,6 @@ public class FundingService {
             }
         }
 
-
-        log.info("FundingService || applyFunding : hi3");
 
         //이번 신청으로 max에 도달했다면
         if(checkMaxFundingCount(fundingId)){
@@ -215,5 +221,13 @@ public class FundingService {
     public boolean isExistFundingName(String searchName){
         //존재하면  true 리턴
         return fundingRepository.isExistFundingName(searchName);
+    }
+
+
+    //펀딩의 리뷰들 리턴
+    public List<ReviewDto> getReviewList(Long fundingId) {
+        return fundingRepository.findById(fundingId).get()
+                .getReviewList().stream().map(r -> r.toDto()).collect(Collectors.toList());
+
     }
 }

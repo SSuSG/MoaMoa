@@ -41,6 +41,9 @@ public class User {
     @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
     private List<UserFunding> userFundings = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Review> reviewList = new ArrayList<>();
+
 
     public UserDto toDto() {
         UserDto userDto = UserDto.builder()

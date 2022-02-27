@@ -37,6 +37,12 @@
                                     <span th:text="|할인가 : ${funding.getDiscountPrice()}|"> </span>
                                     <br>
                                     <span th:text="|구독가 : ${#numbers.formatInteger(funding.getPrice()*(0.8),4)}  |"> </span>
+                                    <br>
+                                    <div th:switch="${funding.fundingStatus.toString()}">
+                                        <span th:case="'PROCEEDING'">진행중</span>
+                                        <span th:case="'CLOSE'">종료</span>
+                                    </div>
+
                                 </div>
                             </div>
                             <!-- Product actions-->

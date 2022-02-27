@@ -1,8 +1,11 @@
 package SG.MoaMoa.dto;
 
+import SG.MoaMoa.domain.FundingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+
+import javax.persistence.Enumerated;
 
 @Getter
 @Builder
@@ -15,5 +18,6 @@ public class MainViewFundingDto {
     private Integer discountPrice;
     private Integer price;
     private String mainImageFileName;
+    private FundingStatus fundingStatus;
 
 }

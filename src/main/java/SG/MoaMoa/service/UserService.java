@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.Message;
 import javax.mail.internet.MimeMessage;
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +30,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final FundingRepository fundingRepository;
     private final JavaMailSender emailSender;
+    private final EntityManager em;
 
     //회원가입
     @Transactional
@@ -218,6 +220,12 @@ public class UserService {
         //연관관계 메소드
         Subscription subscription = Subscription.createSubscription();
         user.setSubscription(subscription);
+        em.flush();
+
         return true;
+    }
+
+    public User getLoginUser(Long userId) {
+        return userRepository.findById(userId).get();
     }
 }

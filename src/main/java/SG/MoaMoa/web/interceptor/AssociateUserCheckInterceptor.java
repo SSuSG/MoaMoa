@@ -22,7 +22,7 @@ public class AssociateUserCheckInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession(false);
-        User loginUser = (User) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        User loginUser = (User) session.getAttribute(SessionConst.LOGIN_USER);
         User updatedUser = userRepository.findById(loginUser.getId()).get();
         if(updatedUser.getRoleType() == RoleType.ASSOCIATE){
             //준회원이면 이메일 인증이 먼저
