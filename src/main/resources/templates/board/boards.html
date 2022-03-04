@@ -4,14 +4,35 @@
     <head th:replace="fragments/header :: header" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .container_list {max-width:1024px; margin:30px auto;}
+        .board_list {width:100%; border-top:2px solid #252525; border-bottom:1px solid #ccc; margin:15px 0; border-collapse: collapse;}
+        .board_list thead th:first-child {background-image:none;}
+        .board_list thead th {border-bottom:1px solid #ccc; padding:13px 0; color:#3b3a3a; text-align: center; vertical-align:middle;}
+        .board_list tbody td {border-top:1px solid #ccc; padding:13px 0; text-align:center; vertical-align:middle;}
+        .board_list tbody tr:first-child td {border:none;}
+        .board_list tbody tr:hover{background:#ffff99;}
+        .board_list tbody td.title {text-align:left; padding-left:20px;}
+        .board_list tbody td a {display:inline-block}
+        .btn {margin:5px; padding:5px 11px; color:#fff !important; display:inline-block; background-color:#7D7F82; vertical-align:middle; border-radius:0 !important; cursor:pointer; border:none;}
+        .btn:hover {background: #6b9ab8;}
+
+    </style>
 </head>
 <body>
 <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-<th:block>
-    <table class="table">
+<div class="container_list">
+    <h2>게시글 목록</h2>
+    <table class="board_list">
+        <colgroup>
+            <col width="15%"/>
+            <col width="*"/>
+            <col width="15%"/>
+            <col width="20%"/>
+        </colgroup>
         <thead class="thead-light">
         <tr>
-            <th scope="col">#</th>
+            <th scope="col">글번호</th>
             <th scope="col">제목</th>
             <th scope="col">글쓴이</th>
             <th scope="col">작성일</th>
@@ -19,21 +40,44 @@
         </thead>
         <tbody th:each="board : ${boardList}">
         <tr>
-            <th scope="row" th:text="${board.id}" ></th>
+            <td th:text="${board.id}" ></td>
             <td><a th:href="|/board/${board.getId()}|" th:text="${board.title}"}></a></td>
             <td th:text="${board.writer}"></td>
             <td th:text="${#temporals.format(board.createdDate,'yyyy-MM-dd HH:mm')}"></td>
         </tr>
         </tbody>
     </table>
-</th:block>
-
+    <a class="btn" id="board">글 쓰기</a>
+</div>
 
 <!-- Footer-->
 <footer class="py-5 bg-dark">
     <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
 </footer>
-</body>
+<script type="text/javascript">
+
+    $('#board').click(function (){
+
+        $.ajax({
+            type: "GET",
+            url: "/isAdmin", //요청 url
+
+            success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                if(res == "admin"){
+                    document.location.href="/admin/board";
+                }else{
+                    alert("관리자만이 공지사항을 작성할수 있습니다.")
+                }
+            },
+            error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                alert("통신 실패.")
+            }
+        });
+    });
+
+
+</script>
 
 </body>
 </html>
+

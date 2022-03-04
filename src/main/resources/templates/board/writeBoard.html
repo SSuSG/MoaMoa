@@ -25,6 +25,17 @@
             border-color: #dc3545;
             color: #dc3545;
         }
+
+        .board_detail {width:100%; border-top:2px solid #252525; border-bottom:1px solid #ccc; border-collapse:collapse;}
+        .board_detail tbody input {width:100%;}
+        .board_detail tbody th {text-align:left; background:#f7f7f7; color:#3b3a3a; vertical-align:middle; text-align: center;}
+        .board_detail tbody th, .board_detail tbody td {padding:10px 15px; border-bottom:1px solid #ccc;}
+        .board_detail tbody textarea {width:100%; min-height:170px}
+
+        .btn {margin:5px; padding:5px 11px; color:#fff !important; display:inline-block; background-color:#7D7F82; vertical-align:middle; border-radius:0 !important; cursor:pointer; border:none;}
+        .btn:hover {background: #6b9ab8;}
+
+
     </style>
 </head>
 <body>
@@ -34,19 +45,24 @@
         <div class="input-form col-md-12 mx-auto">
             <h4 class="mb-3">공지사항 등록</h4>
             <form th:action="@{/admin/board}" th:object="${boardDto}" method="post">
-                <div class="mb-3">
-                    <label for="title">제목</label>
-                    <input type="text" class="form-control" id="title" placeholder="title" th:field="*{title}">
-                    <div class="field-error" th:errors="*{title}" />
-                </div>
-
-                <div class="mb-3">
-                    <label for="content">내용</label>
-                    <input type="text" class="form-control" id="content" placeholder="content" th:field="*{content}">
-                    <div class="field-error" th:errors="*{content}" />
-                </div>
-
-                <button class="btn btn-primary btn-lg btn-block" type="submit">공지사항 등록</button>
+                <table class="board_detail">
+                    <tr>
+                        <td>제목</td>
+                        <td>
+                            <label for="title">제목</label>
+                            <input type="text" class="form-control" id="title" placeholder="title" th:field="*{title}">
+                            <div class="field-error" th:errors="*{title}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label for="content">내용</label>
+                            <textarea id="content" placeholder="content" th:field="*{content}"></textarea>
+                            <div class="field-error" th:errors="*{content}" />
+                        </td>
+                    </tr>
+                </table>
+                <input type="submit" id="submit" value="저장" class="btn">
             </form>
         </div>
     </div>

@@ -186,8 +186,8 @@ public class Funding {
                 .restaurantName(funding.getRestaurantName())
                 .menu(funding.getMenu())
                 .discountPrice(funding.getDiscountPrice())
-                .startDate(funding.getStartDate()) // 수정 -> 펀딩날짜랑 쿠폰기한이랑은 다름
-                .endDate(funding.getEndDate())  // 수정 -> 펀딩날짜랑 쿠폰기한이랑은 다름
+                .startDate(funding.getEndDate().plusDays(1))
+                .endDate(startDate.plusDays(14))
                 .couponStatus(CouponStatus.AVAILABLE)
                 .build();
 

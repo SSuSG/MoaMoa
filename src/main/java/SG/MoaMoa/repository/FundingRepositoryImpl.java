@@ -25,29 +25,6 @@ public class FundingRepositoryImpl implements FundingRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
-    //진행중인 펀딩만 페이징
-    @Override
-    public Slice<Funding> findAllCustom(Pageable pageable) {
-
-        QueryResults<Funding> result = queryFactory
-                .selectFrom(funding)
-                .where(funding.fundingStatus.eq(FundingStatus.PROCEEDING))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize() + 1)
-                .fetchResults();
-
-        List<Funding> content = result.getResults();
-        System.out.println("content.size() = " + content.size());
-        System.out.println("pageable.getPageSize() = " + pageable.getPageSize());
-
-        boolean hasNext = false;
-        if (content.size() > pageable.getPageSize()) {
-            content.remove(pageable.getPageSize());
-            hasNext = true;
-        }
-        return new SliceImpl<>(content, pageable, hasNext);
-    }
-
 
     @Override
     public Page<Funding> findProceedingFundingByPaging(Pageable pageable){

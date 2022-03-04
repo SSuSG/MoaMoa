@@ -7,6 +7,7 @@ import SG.MoaMoa.dto.MainViewFundingDto;
 import SG.MoaMoa.dto.PageRequestDto;
 import SG.MoaMoa.dto.ReviewDto;
 import SG.MoaMoa.repository.FundingRepository;
+import SG.MoaMoa.repository.ReviewRepository;
 import SG.MoaMoa.repository.UserFundingRepository;
 import SG.MoaMoa.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ public class FundingService {
     private final FundingRepository fundingRepository;
     private final UserFundingRepository userFundingRepository;
     private final UserRepository userRepository;
+    private final ReviewRepository reviewRepository;
     private final ImageService imageService;
     private final CouponService couponService;
     private final EntityManager em;
@@ -63,12 +65,6 @@ public class FundingService {
         Funding findFunding = fundingRepository.findById(id).get();
         FundingDto fundingDto = findFunding.toDto();
         return fundingDto;
-    }
-
-    //펀딩리스트들 넘겨주기
-    public Slice<FundingDto> getFundingList(PageRequestDto pageRequestDto){
-        Pageable pageable = PageRequest.of(pageRequestDto.getPage(), pageRequestDto.getSize());
-        return fundingRepository.findAllCustom(pageable).map(funding -> funding.toDto());
     }
 
     //펀딩리스트들 넘겨주기
@@ -225,9 +221,10 @@ public class FundingService {
 
 
     //펀딩의 리뷰들 리턴
-    public List<ReviewDto> getReviewList(Long fundingId) {
-        return fundingRepository.findById(fundingId).get()
-                .getReviewList().stream().map(r -> r.toDto()).collect(Collectors.toList());
+    public Slice<ReviewDto> getReviewList(Pageable pageable , Long fundingId) {
+        log.info("getReviewList ");
+
+        return reviewRepository.findReviewInFunding(pageable , fundingId).map(r -> r.toDto());
 
     }
 }

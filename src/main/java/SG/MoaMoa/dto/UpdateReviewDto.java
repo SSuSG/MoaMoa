@@ -9,10 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReviewDto {
+public class UpdateReviewDto {
 
     private Long id;
     private Long writerId;
-    private String writer;
     private String content;
 }

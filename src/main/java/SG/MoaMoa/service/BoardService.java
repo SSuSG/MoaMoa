@@ -4,6 +4,7 @@ package SG.MoaMoa.service;
 import SG.MoaMoa.domain.Board;
 import SG.MoaMoa.domain.User;
 import SG.MoaMoa.dto.BoardDto;
+import SG.MoaMoa.dto.UpdateBoardDto;
 import SG.MoaMoa.repository.BoardRepository;
 import SG.MoaMoa.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -46,11 +47,11 @@ public class BoardService {
 
     //게시글 수정
     @Transactional
-    public BoardDto updateBoard(BoardDto boardDto){
-        Board board = boardRepository.findById(boardDto.getId()).get();
-        board.updateBoard(boardDto);
+    public boolean updateBoard(UpdateBoardDto updateBoardDto){
+        Board board = boardRepository.findById(updateBoardDto.getId()).get();
+        board.updateBoard(updateBoardDto);
 
-        return board.toDto();
+        return true;
 
     }
 
@@ -58,7 +59,7 @@ public class BoardService {
     //글을 조회하는 페이지에서 ‘삭제’ 버튼을 누르면, /post/{id}으로 Delete 요청을 한다.
     // (만약 1번 글에서 ‘삭제’ 버튼을 클릭하면 /post/1로 접속.)
     @Transactional
-    public void deletePost(Long id) {
+    public void deleteBoard(Long id) {
         boardRepository.deleteById(id);
     }
 

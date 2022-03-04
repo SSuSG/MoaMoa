@@ -2,13 +2,12 @@ package SG.MoaMoa.controller;
 
 import SG.MoaMoa.domain.RoleType;
 import SG.MoaMoa.domain.User;
-import SG.MoaMoa.dto.FundingDto;
-import SG.MoaMoa.dto.MainViewFundingDto;
-import SG.MoaMoa.dto.CreateReviewDto;
+import SG.MoaMoa.dto.*;
 import SG.MoaMoa.service.FundingService;
 import SG.MoaMoa.service.ImageService;
 import SG.MoaMoa.service.ReviewService;
 import SG.MoaMoa.web.argumentresolver.Login;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -16,6 +15,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -77,7 +77,6 @@ public class FundingController {
     public String viewFundingList(@RequestParam(defaultValue = "1") int page, Model model) {
         Pageable pageable = PageRequest.of(page - 1, 4);
         Page<MainViewFundingDto> fundingList = fundingService.getFundings(pageable);
-        log.info("PageSize : {} " , fundingList.getPageable().getPageSize());
         model.addAttribute("fundingList", fundingList);
 
         return "/funding/fundingList";
@@ -94,12 +93,26 @@ public class FundingController {
     //상세 펀딩 페이지
     @GetMapping("/funding/{id}")
     public String viewFunding(@Login User loginUser , @PathVariable Long id,Model model) {
+        Pageable pageable = PageRequest.of(0, 3);
+        Slice<ReviewDto> reviewList = fundingService.getReviewList(pageable, id);
 
-        model.addAttribute("reviewList" , fundingService.getReviewList(id));
+        model.addAttribute("reviewList" , reviewList);
         model.addAttribute("loginUser" , loginUser);
         model.addAttribute("funding", fundingService.getFunding(id));
         return "/funding/viewFunding";
     }
+
+
+    //리뷰 불러오기 , 무한스크롤
+    @GetMapping("/funding/review/{id}")
+    @ResponseBody
+    public Slice<ReviewDto> reviewInFunding(@PathVariable Long id, @RequestParam int page){
+        Pageable pageable = PageRequest.of(page, 3);
+        log.info("page : {}" ,page);
+
+        return fundingService.getReviewList(pageable,id);
+    }
+
 
     //리뷰등록
     @PostMapping("/review")
@@ -111,6 +124,31 @@ public class FundingController {
             return "fail";
     }
 
+    //리뷰 수정
+    @PostMapping("/review/update")
+    @ResponseBody
+    public String updateReview(
+            @Login User loginUser,
+            @RequestBody UpdateReviewDto updateReviewDto
+    ){
+        log.info("updateReview");
+        if(reviewService.updateReview(updateReviewDto , loginUser.getId()))
+            return "success";
+        return "fail";
+    }
+
+    //리뷰 삭제
+    @PostMapping("/review/delete/{id}")
+    @ResponseBody
+    public String deleteReview(
+            @Login User loginUser,
+            @PathVariable Long id){
+        log.info("deleteReview");
+        if(reviewService.deleteReview(id , loginUser.getId()))
+            return "success";
+        return "fail";
+    }
+
     //펀딩참가
     @ResponseBody
     @PostMapping("/funding/application")
@@ -120,7 +158,6 @@ public class FundingController {
     ) {
         log.info("applyFunding || fundingId : {}", fundingId);
         String response = fundingService.applyFunding(loginUser.getId(), fundingId);
-        log.info("applyFunding2");
         return response;
     }
 

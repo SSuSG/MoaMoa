@@ -5,15 +5,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    #form-commentInfo{
-      width: 100%;
-      text-align: center;
-    }
-    #comment-count{
-      margin-bottom: 10px;
-    }
+
     #content{
-      width: 50%;
+      width: 100%;
       height: 3.3em;
     }
     #regReview{
@@ -35,8 +29,10 @@
       margin:auto;
       display:block;
     }
-
-
+    #more_review{
+      margin:auto;
+      display:block;
+    }
 
     /*GLOBALS*/
     *{margin:0; padding:0; list-style:none;}
@@ -193,7 +189,14 @@
       -ms-transition: all 0.3s cubic-bezier(1,.01,.32,1);
       transition: all 0.3s cubic-bezier(1,.01,.32,1);
     }
+    .container_list {max-width:1024px; margin:30px auto;}
 
+    textarea {
+      width: 100%;
+      height: 6.25em;
+      border: none;
+      resize: none;
+    }
   </style>
 
 </head>
@@ -278,11 +281,50 @@
 <button class="btn btn-primary btn-lg" id="apply_funding"  type="button">펀딩 참가</button>
 <br>
 <br>
-<div id="form-commentInfo">
-  <div id="comment-count">리뷰</div>
-  <input id="content" placeholder="리뷰를 입력해 주세요.">
-  <button id="regReview">등록</button>
+<div class="container_list">
+
+  <div class="card my-4" >
+    <h5 class="card-header">Leave a Comment:</h5>
+    <div class="card-body">
+      <div class="form-group">
+        <textarea id="content" name="content" class="form-control" rows="3"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" id="regReview">등록</button>
+    </div>
+  </div>
+
+
+  <table class="table">
+    <colgroup>
+      <col width="15%"/>
+      <col width="70%"/>
+      <col width="15%"/>
+    </colgroup>
+    <thead class="thead-light">
+    <tr>
+      <th scope="col">작성자</th>
+      <th scope="col">내용</th>
+      <th scope="col"> </th>
+    </tr>
+    </thead>
+    <tbody th:each="review : ${reviewList}">
+    <tr>
+      <td th:text="${review.writer}" ></td>
+      <td th:text="${review.content}"></td>
+      <td>
+        <button class="btn btn-primary btn-sm" type="button" th:onclick="|javascript:updateReview('${review.id}','${review.writerId}')|">수정 </button>
+        <button class="btn btn-primary btn-sm" type="button" th:onclick="|javascript:deleteReview('${review.id}')|">삭제 </button>
+      </td>
+    </tr>
+    </tbody>
+    <tbody id = "more">
+
+    </tbody>
+  </table>
+  <button class="btn btn-primary btn-lg" id="more_review"  type="button">더보기</button>
 </div>
+
+
 
 
 <script th:inline="javascript">
@@ -290,6 +332,103 @@
   /*<![CDATA[*/
   var fundingId = [[${funding.id}]];
   /*]]>*/
+  const size = 3;
+  var nextPage = 1;
+  var hasNext = true;
+
+  function addReview(content) {
+    var comment ="";
+    content.forEach(review => {
+
+      var reviewId = review.id;
+      var writerId = review.writerId
+
+      comment +=
+              '<tr>'+
+              '<td>'+ review.writer +'</td>'+
+              '<td>'+ review.content +'</td>'+
+              '<td>'+
+              '<button class="btn btn-primary btn-sm" type="button" onclick="updateReview('+  reviewId + ',' + writerId  +')">'+ '수정 ' +'</button>'+
+              '<button class="btn btn-primary btn-sm" type="button" onclick="deleteReview('+  reviewId  +')">'+ '삭제' +'</button>'+
+              '</td>'+
+              '</tr>';
+
+    })
+
+
+    return comment;
+  }
+
+  function deleteReview(reviewId){
+    alert(reviewId)
+    $.ajax({
+      type: "post",
+      url: "/review/delete/"+reviewId,
+
+      success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+        if(res == "success"){
+          alert("리뷰 삭제에 성공하였습니다.")
+          document.location.href="/funding/"+fundingId;
+        }else{
+          alert("삭제에 실패하였습니다.")
+        }
+
+      },
+      error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+        alert("통신 실패.")
+      }
+    });
+  }
+
+  function updateReview(reviewId,writerId){
+
+    $.ajax({
+      type: "post",
+      url: "/review/update",
+      contentType : 'application/json',
+      data: JSON.stringify({
+        "id" : reviewId,
+        "writerId" : writerId,
+        "content" : content,
+      }),
+
+      success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+
+
+      },
+      error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+        alert("통신 실패.")
+      }
+    });
+  }
+
+
+  $('#more_review').click(function (){
+    if (hasNext){
+      $.ajax({
+        type: "get",
+        url: "/funding/review/"+fundingId,
+        data: {
+          "page" : nextPage,
+        },
+        success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+          $('#more').append(addReview(res.content))
+          if (!res.last){
+            nextPage +=1;
+          }else{
+            hasNext = false;
+          }
+
+        },
+        error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+          alert("통신 실패.")
+        }
+      });
+    }else{
+      alert("더 이상 댓글이 없습니다.")
+    }
+
+  });
 
   $('#regReview').click(function (){
     var content = $("#content").val();

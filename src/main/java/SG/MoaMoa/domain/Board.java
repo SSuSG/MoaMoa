@@ -2,6 +2,7 @@ package SG.MoaMoa.domain;
 
 
 import SG.MoaMoa.dto.BoardDto;
+import SG.MoaMoa.dto.UpdateBoardDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -40,9 +41,9 @@ public class Board extends TimeEntity {
 
 
     //==비즈니스 로직==//
-    public void updateBoard(BoardDto boardDto){
-        this.title = boardDto.getTitle();
-        this.content = boardDto.getContent();
+    public void updateBoard(UpdateBoardDto updateBoardDto){
+        this.title = updateBoardDto.getTitle();
+        this.content = updateBoardDto.getContent();
     }
 
 }

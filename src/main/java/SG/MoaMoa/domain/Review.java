@@ -1,6 +1,7 @@
 package SG.MoaMoa.domain;
 
 import SG.MoaMoa.dto.ReviewDto;
+import SG.MoaMoa.dto.UpdateReviewDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class Review {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id")
+    @JoinColumn(name = "funding_id")
     private Funding funding;
 
     private String content;
@@ -33,6 +34,8 @@ public class Review {
     public ReviewDto toDto(){
         return ReviewDto.builder()
                 .id(id)
+                .writerId(user.getId())
+                .writer(user.getName())
                 .content(content)
                 .build();
     }
@@ -47,4 +50,8 @@ public class Review {
         user.getReviewList().add(this);
     }
 
+    //리뷰 수정
+    public void updateReview(String updateContent) {
+        this.content = updateContent;
+    }
 }

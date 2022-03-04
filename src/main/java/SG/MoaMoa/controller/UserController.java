@@ -138,10 +138,15 @@ public class UserController {
     @ResponseBody
     public String emailAuthenticate(
             @Login User loginUser,
-            @RequestBody AuthenticationKeyDto authenticationKey
+            @RequestBody AuthenticationKeyDto authenticationKey, HttpServletRequest request
             ){
         log.info("emailAuthenticate : {}", authenticationKey.getAuthenticationKey());
         if(userService.IsEqualAuthenticationKey(loginUser.getId() , authenticationKey.getAuthenticationKey())){
+            //로그인 유저 최신화
+            HttpSession session = request.getSession();
+            session.removeAttribute(SessionConst.LOGIN_USER);
+            session.setAttribute(SessionConst.LOGIN_USER , userService.getLoginUser(loginUser.getId()));
+
             //인증성공!
             return "success";
 

@@ -4,35 +4,114 @@
     <head th:replace="fragments/header :: header" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        caption {display:none; width:0; height:0; margin-top:-1px; overflow:hidden; visibility:hidden; font-size:0; line-height:0;}
+        .container {max-width:1024px; margin:30px auto;}
+        .board_detail {width:100%; border-top:2px solid #252525; border-bottom:1px solid #ccc; border-collapse:collapse;}
+        .board_detail tbody input {width:100%;}
+        .board_detail tbody th {text-align:left; background:#f7f7f7; color:#3b3a3a; vertical-align:middle; text-align: center;}
+        .board_detail tbody th, .board_detail tbody td {padding:10px 15px; border-bottom:1px solid #ccc;}
+        .board_detail tbody textarea {width:100%; min-height:170px}
+
+    </style>
 </head>
 <body>
 <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+<div class="container">
+    <h2>게시글 상세 화면</h2>
+    <table class="board_detail">
+        <colgroup>
+            <col width="15%"/>
+            <col width="35%"/>
+            <col width="15%"/>
+            <col width="35%"/>
+        </colgroup>
+        <caption>글 읽기</caption>
+        <tbody>
 
-<table class ="table table-bordered">
-    <thead>
-    <caption>글 읽기</caption>
-    </thead>
-    <tbody>
-    <tr>
-        <th>제목</th>
-        <td th:text="${board.title}"></td>
-    </tr>
-    <tbody>
-    <tr>
-        <th>작성자</th>
-        <td th:text="${board.writer}"></td>
-    </tr>
-    <tr>
-        <th>본문 내용</th>
-        <td th:text="${board.content}"></td>
-    </tr>
-    <tr>
-        <th>작성일</th>
-        <td th:inline="text">[[${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}]]</td>
-    </tr>
-    </tbody>
-</table>
+        <tr>
+            <th scope="row">글 번호</th>
+            <td th:text="${board.id}"></td>
+        </tr>
+        <tr>
+            <th scope="row">작성자</th>
+            <td th:text="${board.writer}"></td>
+            <th scope="row">작성일</th>
+            <td th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        </tr>
+        <tr>
+            <th scope="row">제목</th>
+            <td colspan="3">
+                <input type="text" id="title" name="title" th:value="${board.title }"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" class="view_text">
+                <textarea title="내용" id="content" name="content" th:text="${board.content }"></textarea>
+            </td>
+        </tr>
 
+        </tbody>
+    </table>
+
+    <input type="button" id="list" value="목록으로" th:onclick="|location.href='@{/boards}'|">
+    <input type="button" id="edit" value="수정하기">
+    <input type="button" id="delete" value="삭제하기">
+
+    <script type="text/javascript">
+        /*<![CDATA[*/
+        var boardId = [[${board.id}]];
+        /*]]>*/
+
+
+        $('#edit').click(function (){
+            var title = $("#title").val();
+            var content = $("#content").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/admin/board/update", //요청 url
+                contentType : 'application/json',
+                data: JSON.stringify({
+                    "id" : boardId,
+                    "title" : title,
+                    "content" : content
+                }),
+                success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                    if(res == "success"){
+                        alert("성공적으로 수정하였습니다!")
+                        document.location.href="/board/"+boardId;
+                    }
+
+                },
+                error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                    alert("통신 실패.")
+                }
+            });
+        });
+
+        $('#delete').click(function (){
+
+            $.ajax({
+                type: "POST",
+                url: "/admin/board/delete/"+boardId, //요청 url
+
+                success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                    if(res == "success"){
+                        alert("성공적으로 삭제하였습니다!")
+                        document.location.href="/boards";
+                    }
+                },
+                error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                    alert("통신 실패.")
+                }
+            });
+        });
+
+
+    </script>
+    <!-- ADD END -->
+</div>
 
 <!-- Footer-->
 <footer class="py-5 bg-dark">
