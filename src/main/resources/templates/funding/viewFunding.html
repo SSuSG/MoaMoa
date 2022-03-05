@@ -308,12 +308,12 @@
     </tr>
     </thead>
     <tbody th:each="review : ${reviewList}">
-    <tr>
+    <tr th:id="'review_'+${review.id}">
       <td th:text="${review.writer}" ></td>
-      <td th:text="${review.content}"></td>
+      <td th:id="'content_'+${review.id}" th:text="${review.content}"></td>
       <td>
-        <button class="btn btn-primary btn-sm" type="button" th:onclick="|javascript:updateReview('${review.id}','${review.writerId}')|">수정 </button>
-        <button class="btn btn-primary btn-sm" type="button" th:onclick="|javascript:deleteReview('${review.id}')|">삭제 </button>
+        <button class="btn btn-primary btn-sm" type="button" th:onclick="updateReviewBtn( [[${review.id}]], [[${review.writerId}]], [[${review.content}]],[[${review.writer}]])">수정 </button>
+        <button class="btn btn-primary btn-sm" type="button" th:onclick="deleteReview([[${review.id}]])">삭제 </button>
       </td>
     </tr>
     </tbody>
@@ -341,14 +341,15 @@
     content.forEach(review => {
 
       var reviewId = review.id;
-      var writerId = review.writerId
+      var writerId = review.writerId;
+      var reviewWriter = "'" + review.writer + "'";
 
       comment +=
-              '<tr>'+
+              '<tr id="review_' + reviewId + '">'+
               '<td>'+ review.writer +'</td>'+
-              '<td>'+ review.content +'</td>'+
+              '<td id="content_' + reviewId + '">'+ review.content +'</td>'+
               '<td>'+
-              '<button class="btn btn-primary btn-sm" type="button" onclick="updateReview('+  reviewId + ',' + writerId  +')">'+ '수정 ' +'</button>'+
+              '<button class="btn btn-primary btn-sm" type="button" onclick="updateReviewBtn('+  reviewId + ',' + writerId  + ',' + review.content + ',' +  reviewWriter + ')">'+ '수정 ' +'</button>'+
               '<button class="btn btn-primary btn-sm" type="button" onclick="deleteReview('+  reviewId  +')">'+ '삭제' +'</button>'+
               '</td>'+
               '</tr>';
@@ -359,8 +360,65 @@
     return comment;
   }
 
+  function updateReview(reviewId , writerId , reviewWriter){
+    var comment =""
+    var reviewContent = $('#update_review_'+reviewId).val();
+    comment +=
+            '<tr id="review_' + reviewId + '">'+
+            '<td>'+ reviewWriter +'</td>'+
+            '<td id="content_' + reviewId + '">'+ reviewContent +'</td>'+
+            '<td>'+
+            '<button class="btn btn-primary btn-sm" type="button" onclick="updateReviewBtn('+  reviewId + ',' + writerId  + ',' + reviewContent + ',' + "'"+ reviewWriter +"'"+')">'+ '수정 ' +'</button>'+
+            '<button class="btn btn-primary btn-sm" type="button" onclick="deleteReview('+  reviewId  +')">'+ '삭제' +'</button>'+
+            '</td>'+
+            '</tr>';
+
+    $.ajax({
+      type: "post",
+      url: "/review/update",
+      contentType : 'application/json',
+      data: JSON.stringify({
+        "id" : reviewId,
+        "writerId" : writerId,
+        "content" : reviewContent,
+      }),
+
+      success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+
+        if(res == 'success'){
+          $('#review_'+reviewId).replaceWith(comment);
+        }
+
+
+      },
+      error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+        alert("통신 실패.")
+      }
+    });
+  };
+
+  function updateReviewBtn(reviewId, writerId , reviewContent , reviewWriter){
+
+    var comment =""
+    var nReviewWriter = "'" + reviewWriter +"'";
+
+    comment +=
+            '<tr id="review_' + reviewId + '">'+
+            '<td>'+ reviewWriter +'</td>'+
+            '<td id="content_' + reviewId + '"><textarea id="update_review_'+ reviewId +'" class="form-control">'+ reviewContent +'</textarea><td>'+
+            '<button class="btn btn-primary btn-sm" type="button" onclick="updateReview('+  reviewId +','+ writerId + ','+ nReviewWriter +')">'+ '수정' +'</button>'+
+            '</td>'+
+            '</tr>';
+
+    $('#review_'+reviewId).replaceWith(comment);
+    $('#review_'+reviewId+'#content_'+reviewId).focus();
+
+  };
+
+
+
   function deleteReview(reviewId){
-    alert(reviewId)
+
     $.ajax({
       type: "post",
       url: "/review/delete/"+reviewId,
@@ -378,29 +436,7 @@
         alert("통신 실패.")
       }
     });
-  }
-
-  function updateReview(reviewId,writerId){
-
-    $.ajax({
-      type: "post",
-      url: "/review/update",
-      contentType : 'application/json',
-      data: JSON.stringify({
-        "id" : reviewId,
-        "writerId" : writerId,
-        "content" : content,
-      }),
-
-      success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
-
-
-      },
-      error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
-        alert("통신 실패.")
-      }
-    });
-  }
+  };
 
 
   $('#more_review').click(function (){
