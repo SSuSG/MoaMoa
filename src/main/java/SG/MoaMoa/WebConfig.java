@@ -17,8 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
-    private final UserRepository userRepository;
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginCheckInterceptor())
@@ -29,7 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
                          "/*.ico", "/error", "/join/**" , "/bootstrap/**","/images/**"
                 );
 
-        registry.addInterceptor(new AssociateUserCheckInterceptor(userRepository))
+        registry.addInterceptor(new AssociateUserCheckInterceptor())
                 .order(2)
                 .addPathPatterns("/**")
                 .excludePathPatterns(

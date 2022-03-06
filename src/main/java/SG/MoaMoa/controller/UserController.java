@@ -92,7 +92,6 @@ public class UserController {
     @PostMapping("/join")
     @ResponseBody
     public String PasswordAndDuplicateUserCheckInJoin(@RequestBody UserDto userDto) throws Exception {
-        log.info("PasswordAndDuplicateUserCheckInJoin : {},{}", userDto.getPassword() ,userDto.getCheckPassword() );
 
         //비밀번호가 일치하지 않을경우
         if(!userDto.getPassword().equals(userDto.getCheckPassword()))
@@ -114,7 +113,6 @@ public class UserController {
     @GetMapping("/join/id")
     @ResponseBody
     public String joinIdCheck(@RequestParam String loginId){
-        log.info("joinIdCheck || loginId : {}" , loginId);
 
         if(userService.checkLoginIdDuplicate(loginId)){
             //아이디가 중복되었음
@@ -140,7 +138,6 @@ public class UserController {
             @Login User loginUser,
             @RequestBody AuthenticationKeyDto authenticationKey, HttpServletRequest request
             ){
-        log.info("emailAuthenticate : {}", authenticationKey.getAuthenticationKey());
         if(userService.IsEqualAuthenticationKey(loginUser.getId() , authenticationKey.getAuthenticationKey())){
             //로그인 유저 최신화
             HttpSession session = request.getSession();
@@ -251,7 +248,6 @@ public class UserController {
             @Login User loginUser,
             @RequestParam int amount
     ){
-        log.info("myPaymentSuccess ||  money : {}" , amount);
         userService.chargeMoney(loginUser.getId() , amount);
         return "1111";
     }

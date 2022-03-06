@@ -44,7 +44,7 @@ public class FundingController {
     @GetMapping("/admin/check")
     @ResponseBody
     public String adminCheck(@Login User loginUser){
-        log.info("adminCheck!!");
+
         if (loginUser.getRoleType() == RoleType.ADMIN) {
             return "success";
         }else{
@@ -55,7 +55,7 @@ public class FundingController {
     //펀딩등록하기
     @GetMapping("/admin/funding")
     public String viewRegFundingPage(@ModelAttribute FundingDto fundingDto) {
-        log.info("FundingController : viewRegFundingPage");
+
         return "/admin/registerFunding";
     }
 
@@ -65,7 +65,7 @@ public class FundingController {
         if (bindingResult.hasErrors())
             return "admin/registerFunding";
 
-        log.info("FundingController : registerFunding");
+
         fundingService.createFunding(fundingDto);
         return "redirect:/admin";
     }
@@ -86,7 +86,6 @@ public class FundingController {
     @ResponseBody
     @GetMapping("/images/{imageName}")
     public Resource downloadImage(@PathVariable String imageName) throws MalformedURLException {
-        log.info("downloadImage : {}", imageName);
         return new UrlResource("file:" + imageService.getFullPath(imageName));
     }
 
@@ -108,7 +107,6 @@ public class FundingController {
     @ResponseBody
     public Slice<ReviewDto> reviewInFunding(@PathVariable Long id, @RequestParam int page){
         Pageable pageable = PageRequest.of(page, 3);
-        log.info("page : {}" ,page);
 
         return fundingService.getReviewList(pageable,id);
     }
@@ -131,7 +129,6 @@ public class FundingController {
             @Login User loginUser,
             @RequestBody UpdateReviewDto updateReviewDto
     ){
-        log.info("updateReview");
         if(reviewService.updateReview(updateReviewDto , loginUser.getId()))
             return "success";
         return "fail";
@@ -143,7 +140,6 @@ public class FundingController {
     public String deleteReview(
             @Login User loginUser,
             @PathVariable Long id){
-        log.info("deleteReview");
         if(reviewService.deleteReview(id , loginUser.getId()))
             return "success";
         return "fail";
@@ -156,7 +152,6 @@ public class FundingController {
             @Login User loginUser,
             @RequestParam Long fundingId
     ) {
-        log.info("applyFunding || fundingId : {}", fundingId);
         String response = fundingService.applyFunding(loginUser.getId(), fundingId);
         return response;
     }
@@ -164,7 +159,6 @@ public class FundingController {
     //검색기능
     @GetMapping("/funding/search")
     public String searchFunding(@RequestParam String searchName , Model model){
-        log.info("searchFunding : {} ", searchName);
         model.addAttribute("searchFundingList",fundingService.searchFundingName(searchName));
         return "/funding/searchFundingList";
     }
@@ -173,7 +167,6 @@ public class FundingController {
     @GetMapping("/funding/exist")
     @ResponseBody
     public String isExistFunding(@RequestParam String searchName){
-        log.info("isExistFunding : {} ", searchName);
         if(fundingService.isExistFundingName(searchName))
             return "success";
         else
