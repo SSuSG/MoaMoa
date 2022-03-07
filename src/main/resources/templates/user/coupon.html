@@ -2,17 +2,37 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <head th:replace="fragments/header :: header" />
+    <style>
+        .container_list {max-width:1024px; margin:30px auto;}
+        .board_list {width:100%; border-top:2px solid #252525; border-bottom:1px solid #ccc; margin:15px 0; border-collapse: collapse;}
+        .board_list thead th:first-child {background-image:none;}
+        .board_list thead th {border-bottom:1px solid #ccc; padding:13px 0; color:#3b3a3a; text-align: center; vertical-align:middle;}
+        .board_list tbody td {border-top:1px solid #ccc; padding:13px 0; text-align:center; vertical-align:middle;}
+        .board_list tbody tr:first-child td {border:none;}
+        .board_list tbody tr:hover{background:#ffff99;}
+        .board_list tbody td.title {text-align:left; padding-left:20px;}
+        .board_list tbody td a {display:inline-block}
+        .btn {margin:5px; padding:5px 11px; color:#fff !important; display:inline-block; background-color:#7D7F82; vertical-align:middle; border-radius:0 !important; cursor:pointer; border:none;}
+        .btn:hover {background: #6b9ab8;}
+
+    </style>
 </head>
 <body>
 <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-<th:block>
-    <table class="table">
+<div class="container_list">
+    <h2>쿠폰 목록</h2>
+    <table class="board_list">
+        <colgroup>
+            <col width="20%"/>
+            <col width="30%"/>
+            <col width="20%"/>
+            <col width="15%"/>
+            <col width="15%"/>
+        </colgroup>
         <thead class="thead-light">
         <tr>
-            <th scope="col">#</th>
             <th scope="col">가게이름</th>
             <th scope="col">메뉴</th>
-            <th scope="col">할인가</th>
             <th scope="col">쿠폰상태</th>
             <th scope="col">쿠폰사용기간</th>
             <th scope="col">쿠폰사용</th>
@@ -20,10 +40,8 @@
         </thead>
         <tbody th:each="coupon : ${couponList}">
         <tr>
-            <th scope="row" th:text="${coupon.id}" ></th>
             <td th:text="${coupon.restaurantName}" ></td>
             <td th:text="${coupon.menu}"></td>
-            <td th:text="${coupon.discountPrice}"></td>
             <td th:text="${coupon.couponStatus}"></td>
             <td>
                 <span th:text="${#temporals.format(coupon.startDate,'yyyy-MM-dd')}"> </span>
@@ -35,11 +53,10 @@
                     <button type="submit" class="btn btn-secondary">사용하기</button>
                 </form>
             </td>
-
         </tr>
         </tbody>
     </table>
-</th:block>
+</div>
 
 
 <br>

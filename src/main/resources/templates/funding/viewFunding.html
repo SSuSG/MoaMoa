@@ -207,9 +207,6 @@
   <div id="slider-wrap">
     <ul id="slider">
       <li th:each="image:${funding.getImageList()}">
-        <div>
-          <h3 th:text="${funding.getRestaurantName()}">Slide #1</h3>
-        </div>
         <img  th:src="|/images/${image.getStoreImageName()}|"/>
       </li>
     </ul>
@@ -241,15 +238,15 @@
     <td th:text="${funding.menu}"></td>
   </tr>
   <tr>
-    <th>원래 가격</th>
+    <th>정가</th>
     <td th:text="${funding.price}"></td>
   </tr>
   <tr th:if="${loginUser.roleType.toString().equals('SUBSCRIBER')}">
-    <th>할인 가격</th>
+    <th>할인가격</th>
     <td th:text="${funding.price}*(8/10)"></td>
   </tr>
   <tr th:if="${loginUser.roleType.toString().equals('REGULAR')}">
-    <th>할인 가격</th>
+    <th>할인가</th>
     <td th:text="${funding.discountPrice}"></td>
   </tr>
   <tr>
