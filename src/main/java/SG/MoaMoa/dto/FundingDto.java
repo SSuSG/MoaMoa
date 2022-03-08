@@ -38,8 +38,8 @@ public class FundingDto {
     @NotEmpty(message = "공지사항을 입력해주세요.")
     private String notice;
 
-    @NotNull(message = "할인가격을 입력해주세요.")
     private Integer discountPrice;
+
     @NotNull(message = "정상가격 입력해주세요.")
     private Integer price;
     @NotNull(message = "최소펀딩수를 입력해주세요.")

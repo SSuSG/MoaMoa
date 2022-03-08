@@ -62,8 +62,11 @@ public class FundingController {
     //펀딩등록하기
     @PostMapping("/admin/funding")
     public String registerFunding(@Valid @ModelAttribute FundingDto fundingDto, BindingResult bindingResult) throws IOException {
-        if (bindingResult.hasErrors())
+        log.info("0");
+        if (bindingResult.hasErrors()) {
+            log.info("{}",bindingResult.getFieldError());
             return "admin/registerFunding";
+        }
 
 
         fundingService.createFunding(fundingDto);

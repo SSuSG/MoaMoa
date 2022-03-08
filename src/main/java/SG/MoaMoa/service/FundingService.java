@@ -57,6 +57,7 @@ public class FundingService {
         for (Image image : images) {
             funding.addImage(image);
         }
+
         fundingRepository.save(funding);
     }
 
@@ -176,6 +177,7 @@ public class FundingService {
     //매일 자정에 펀딩이 끝났는지 아닌지 체크
     @Transactional
     @Scheduled(cron = "1 0 0 * * *") // 매일 0시에 체크
+    //@Scheduled(fixedDelay = 20000)
     public void checkFundingEndDate(){
         log.info("FundingService : checkFundingEndDate");
 
@@ -196,6 +198,7 @@ public class FundingService {
     //펀딩 시작날짜가 되면 펀딩시작!
     @Transactional
     @Scheduled(cron = "1 0 0 * * *") // 매일 0시에 체크
+    //@Scheduled(fixedDelay = 20000)
     public void checkFundingStartDate(){
         log.info("FundingService : checkFundingStartDate");
         List<Funding> readyFunding = fundingRepository.findReadyFunding();
