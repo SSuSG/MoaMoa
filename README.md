@@ -381,6 +381,15 @@ https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9
 
 
 5-1. 아이디 찾기 ( 이름 + 이메일 입력)
+
+
+
+
+
+
+
+
+
 ![findId-1](https://user-images.githubusercontent.com/33506590/169703650-66d0fa07-65d5-4ee1-a7d3-9da211d2fee5.PNG)
 
 
@@ -393,6 +402,15 @@ https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9
 
 
 5-2.아이디 찾기 (가입된 이름+이메일 입력)
+
+
+
+
+
+
+
+
+
 ![findId-2](https://user-images.githubusercontent.com/33506590/169703652-08c592a3-dcac-4c03-a782-6e8da8aa3ed8.PNG)
 
 
@@ -405,6 +423,15 @@ https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9
 
 
 5-3.아이디 찾기 ( 가입되지않은 이름 + 이메일 입력 )
+
+
+
+
+
+
+
+
+
 ![findId-3](https://user-images.githubusercontent.com/33506590/169703655-c8b4aae4-5a65-4146-bd52-b3c69c1f8fa4.PNG)
 
 
@@ -417,6 +444,15 @@ https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9
 
 
 6-1.비밀번호 찾기 (가입된 정보 입력)
+
+
+
+
+
+
+
+
+
 ![findPw-1](https://user-images.githubusercontent.com/33506590/169703656-4376024d-30ad-443b-b617-f2ede0777697.PNG)
 
 
@@ -429,6 +465,15 @@ https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9
 
 
 6-2.비밀번호 찾기 (가입되지 않은 정보 입력)
+
+
+
+
+
+
+
+
+
 ![findPw-2](https://user-images.githubusercontent.com/33506590/169703658-61fb8076-044f-4b43-846a-2a4eeaeef5ce.PNG)
 
 
@@ -441,6 +486,15 @@ https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9
 
 
 7. 마이페이지
+
+
+
+
+
+
+
+
+
 ![mypage-1](https://user-images.githubusercontent.com/33506590/169703722-cfc7f705-f9cf-4bed-b526-f6682840fcd1.PNG)
 
 
@@ -453,6 +507,15 @@ https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9
 
 
 7-1.마이페이지(내정보/ 초기상태)
+
+
+
+
+
+
+
+
+
 ![mypage-2](https://user-images.githubusercontent.com/33506590/169703727-415269fb-d0a8-43a8-9b06-4612eb9d0091.PNG)
 
 
@@ -465,6 +528,15 @@ https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9
 
 
 7-2.마이페이지(쿠폰 목록/ 초기상태)
+
+
+
+
+
+
+
+
+
 ![mypage-3](https://user-images.githubusercontent.com/33506590/169703729-50eeef59-6705-4256-a780-148ea1fd3d31.PNG)
 
 
@@ -477,6 +549,15 @@ https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9
 
 
 7-3.마이페이지(결제)
+
+
+
+
+
+
+
+
+
 ![mypage-4](https://user-images.githubusercontent.com/33506590/169703730-928ecb2a-5b1a-4d91-ad7e-4109309c2924.PNG)
 
 
@@ -489,6 +570,15 @@ https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9
 
 
 7-4.마이페이지(구독)
+
+
+
+
+
+
+
+
+
 ![mypage-5](https://user-images.githubusercontent.com/33506590/169703735-126d4443-3467-41e5-b868-a356093161f9.PNG)
 
 
@@ -501,6 +591,15 @@ https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9
 
 
 8.가게(등록된 가게(=펀딩)들)
+
+
+
+
+
+
+
+
+
 ![restaurant-1](https://user-images.githubusercontent.com/33506590/169703755-90a78cec-bde8-41e3-87b6-399f55e08396.PNG)
 
 
@@ -513,6 +612,15 @@ https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9
 
 
 8-1. Detail한 펀딩정보
+
+
+
+
+
+
+
+
+
 ![restaurant-2](https://user-images.githubusercontent.com/33506590/169703756-b6f237ab-ff6b-4901-b1c1-e1a53fb54f1d.PNG)
 
 
