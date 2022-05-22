@@ -151,232 +151,205 @@
 
 1.메인화면(홈)
 
-![Home.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0c8eb7a4-9118-4141-ade3-4f4418f1ea99/Home.png)
+![Home](https://user-images.githubusercontent.com/33506590/169703519-232b074a-f1d8-47c2-a11f-b43c7b518954.png)
 
 2.로그인화면
-
-![Login.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c2753d8d-8a01-4e05-ae93-b6b6078f1d81/Login.png)
+![Login](https://user-images.githubusercontent.com/33506590/169703531-7a48baa8-c668-4310-9470-703ffe41c087.png)
 
 3.회원가입
-
-![join-1.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7c268cc6-56ff-4dec-85d3-12ec7666bf5d/join-1.png)
+![join-1](https://user-images.githubusercontent.com/33506590/169703551-53e6969e-4485-41e7-9667-ffc9fa6fb37a.PNG)
 
 3-1.아이디중복체크(중복일시)
-
-![join-2.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0789e2fa-9fa0-432e-92f7-fdf636308c4f/join-2.png)
+![join-2](https://user-images.githubusercontent.com/33506590/169703554-fa53ea5a-60b5-4dc2-8dbf-c12120f3f5b9.PNG)
 
 3-2. 아이디 중복체크(중복이 아닐시)
-
-![join-3.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c14326d4-6e80-4227-b062-e0d7b6edf896/join-3.png)
+![join-3](https://user-images.githubusercontent.com/33506590/169703555-f55427f1-6a23-4092-97dc-a8a27487d296.PNG)
 
 3-3. 비밀번호 확인(일치하지 않을시)
-
-![join-4.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7564b88f-7d3d-40b4-ac56-1b7d90f49598/join-4.png)
+![join-4](https://user-images.githubusercontent.com/33506590/169703558-bbc6df0e-6ccf-48b2-b91d-d47e508b8729.PNG)
 
 3-4.비밀번호 확인(일치할 시)
-
-![join-5.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/454eb82a-543d-464e-ba62-ec73bc9d9456/join-5.png)
+![join-5](https://user-images.githubusercontent.com/33506590/169703560-ffea202c-3e6f-494e-89d0-e334f5b79e6b.PNG)
 
 3-5. 회원가입 성공시
-
-![join-6.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b9331246-f570-44c1-8153-3c26fc3479bd/join-6.png)
+![join-6](https://user-images.githubusercontent.com/33506590/169703568-25b12fd7-e302-4dcd-a94d-0d29bfff1c99.PNG)
 
 4-1.틀린 아이디 또는 비밀번호를 입력할시
 
-![Login-2.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9caa4a08-ce90-4f3c-9bb5-453b85fe3cc0/Login-2.png)
+
+![Login-2](https://user-images.githubusercontent.com/33506590/169703633-5a46356a-b512-4888-9a02-1091c82e6743.PNG)
 
 4-2. 회원가입후 인증 없이 로그인할시 ( 인증키 입력 페이지로 이동)
-
-![auth-1.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e2419fed-9db9-4382-93d6-7930a3873d89/auth-1.png)
+![auth-1](https://user-images.githubusercontent.com/33506590/169703637-ad60c117-cf60-4f50-87a6-a0e51d5a35e1.PNG)
 
 4-3. 회원가입한 이메일로 인증키가 발송된것을 확인
-
-![auth-2.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d3ae96a6-599c-4e20-989c-7b52a6503eb9/auth-2.png)
-
+![auth-2](https://user-images.githubusercontent.com/33506590/169703641-3657f9ed-a5f0-48e6-81df-8b1d3cc141f6.PNG)
 4-4. 잘못된 인증키값 입력시
 
-![auth-3.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1e935af8-c108-46ca-b7f2-a36609c4a801/auth-3.png)
+![auth-3](https://user-images.githubusercontent.com/33506590/169703646-3bd31f99-7d5f-4d84-bb59-2c78c93e31e9.PNG)
 
 4-5.올바른 인증키값 입력시
-
-![auth-4.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1fd3ca87-c8f8-46bd-a779-cbb3779b9fff/auth-4.png)
+![auth-4](https://user-images.githubusercontent.com/33506590/169703648-f1df92eb-ed7e-4620-83b4-3b5dc7dd0adf.PNG)
 
 5-1. 아이디 찾기 ( 이름 + 이메일 입력)
-
-![findId-1.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f49a457b-6df7-4bf4-a76b-76682d82392b/findId-1.png)
+![findId-1](https://user-images.githubusercontent.com/33506590/169703650-66d0fa07-65d5-4ee1-a7d3-9da211d2fee5.PNG)
 
 5-2.아이디 찾기 (가입된 이름+이메일 입력)
 
-![findId-2.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4bf16335-8d01-47b6-82f0-65b5f9bbb06a/findId-2.png)
+![findId-2](https://user-images.githubusercontent.com/33506590/169703652-08c592a3-dcac-4c03-a782-6e8da8aa3ed8.PNG)
 
 5-3.아이디 찾기 ( 가입되지않은 이름 + 이메일 입력 )
 
-![findId-3.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2afd18b6-45ee-4dad-8afe-88a7bb55e69c/findId-3.png)
+![findId-3](https://user-images.githubusercontent.com/33506590/169703655-c8b4aae4-5a65-4146-bd52-b3c69c1f8fa4.PNG)
 
 6-1.비밀번호 찾기 (가입된 정보 입력)
 
-![findPw-1.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0a416cc8-53c9-4c45-a99f-af7c9a3fe50b/findPw-1.png)
+![findPw-1](https://user-images.githubusercontent.com/33506590/169703656-4376024d-30ad-443b-b617-f2ede0777697.PNG)
 
 6-2.비밀번호 찾기 (가입되지 않은 정보 입력)
 
-![findPw-2.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4f0cb04f-bbb4-4f14-853d-7f089a0d39c4/findPw-2.png)
+![findPw-2](https://user-images.githubusercontent.com/33506590/169703658-61fb8076-044f-4b43-846a-2a4eeaeef5ce.PNG)
 
 7. 마이페이지
 
-![mypage-1.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9b5a8e61-287b-4bef-8072-5ac8488d8f3e/mypage-1.png)
+![mypage-1](https://user-images.githubusercontent.com/33506590/169703722-cfc7f705-f9cf-4bed-b526-f6682840fcd1.PNG)
 
 7-1.마이페이지(내정보/ 초기상태)
 
-![mypage-2.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4e949c92-6b08-4d86-87a2-1bb0277329b0/mypage-2.png)
+![mypage-2](https://user-images.githubusercontent.com/33506590/169703727-415269fb-d0a8-43a8-9b06-4612eb9d0091.PNG)
 
 7-2.마이페이지(쿠폰 목록/ 초기상태)
 
-![mypage-3.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/185e5fb7-aae5-4157-bddc-99bd80e8659d/mypage-3.png)
+![mypage-3](https://user-images.githubusercontent.com/33506590/169703729-50eeef59-6705-4256-a780-148ea1fd3d31.PNG)
 
 7-3.마이페이지(결제)
 
-![mypage-4.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ede343fa-015f-4d68-a5fc-c7ca06de043b/mypage-4.png)
+![mypage-4](https://user-images.githubusercontent.com/33506590/169703730-928ecb2a-5b1a-4d91-ad7e-4109309c2924.PNG)
 
 7-4.마이페이지(구독)
 
-![mypage-5.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e78f8447-d787-489e-bf73-6298167ca27f/mypage-5.png)
+![mypage-5](https://user-images.githubusercontent.com/33506590/169703735-126d4443-3467-41e5-b868-a356093161f9.PNG)
+
 
 8.가게(등록된 가게(=펀딩)들)
 
-![restaurant-1.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5039ea6b-0dfe-4bcb-a432-15e6bc6b6321/restaurant-1.png)
+![restaurant-1](https://user-images.githubusercontent.com/33506590/169703755-90a78cec-bde8-41e3-87b6-399f55e08396.PNG)
 
 8-1. Detail한 펀딩정보
 
-![restaurant-2.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/252346c8-5e01-4126-a3d3-e4d8e4d391d1/restaurant-2.png)
+![restaurant-2](https://user-images.githubusercontent.com/33506590/169703756-b6f237ab-ff6b-4901-b1c1-e1a53fb54f1d.PNG)
 
 8-2. 가게(=펀딩)의 리뷰
 
-![restaurant-3.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4850c3fa-3780-4418-9f4a-23f3f15c2cb5/restaurant-3.png)
+![restaurant-3](https://user-images.githubusercontent.com/33506590/169703758-8f6076e7-90dc-4af4-9401-fd487c0b318d.PNG)
 
 8-3.펀딩참여시 (돈이 부족할때)
-
-![restaurant-4.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6d7e8ffd-e9a8-49fc-a8e9-3141422a45cb/restaurant-4.png)
+![restaurant-4](https://user-images.githubusercontent.com/33506590/169703760-84d2b1e9-12cc-407b-9f86-80a1a56049d6.PNG)
 
 8-4. 마이페이지(결제/카카오톡 연동)
 
-![mypage-6.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/97571fdc-e81f-4310-b86d-a7e3e485acf7/mypage-6.png)
+
+![mypage-6](https://user-images.githubusercontent.com/33506590/169703789-7779e188-7e26-4170-9cbd-12896376637a.PNG)
 
 8-5.마이페이지(결제2/카카오톡 연동)
 
-![mypage-9.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/acbf22cd-f9e2-4ff5-a929-32a3302d21c7/mypage-9.jpg)
+![mypage-9](https://user-images.githubusercontent.com/33506590/169703791-44b5c821-382a-4f7a-8fa6-508ede12c16f.jpg)
 
 8-6.마이페이지(결제 성공)
 
-![mypage-7.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6a7998a3-146d-4927-8f02-fb68fdac54fb/mypage-7.png)
+![mypage-7](https://user-images.githubusercontent.com/33506590/169703794-8e125a08-ee13-42b2-9641-61eb24f61233.PNG)
 
 8-7.마이페이지(결제성공후 내정보)
 
-![mypage-8.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2839b32e-dc2f-4ae9-a8c8-90b334fa5d9f/mypage-8.png)
+![mypage-8](https://user-images.githubusercontent.com/33506590/169703797-49266926-eaf2-4640-996a-8e17cf9d0afc.PNG)
 
 8-8.펀딩참여시 (돈이 충분할때)
-
-![restaurant-12.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ddad6981-7f9b-4951-8a21-8ec06321633c/restaurant-12.png)
+![restaurant-12](https://user-images.githubusercontent.com/33506590/169703801-b6f788c0-b62a-46c4-a21f-8d97ce9e207c.PNG)
 
 8-9.펀딩참여성공시(현재 펀딩개수가 하나 늘어남)
-
-![restaurant-13.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/aaa7f338-3e1a-4512-b0e2-30983c2bd7ff/restaurant-13.png)
+![restaurant-13](https://user-images.githubusercontent.com/33506590/169703806-99326bab-a64d-4cdd-b456-cb46a490ebd4.PNG)
 
 8-10. 마이페이지(펀딩 참여목록 / 초기상태에 비해서 펀딩참여목록이 생김)
 
-![mypage-funding-1.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/354a15e7-def9-4f92-816c-ea6c4f7c0aba/mypage-funding-1.png)
+![mypage-funding-1](https://user-images.githubusercontent.com/33506590/169703826-d1d03310-5784-41ae-9ca1-c2afb4beb566.PNG)
 
 8-11.펀딩리뷰(리뷰 등록후)
 
-![restaurant-5.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/15a52d7a-a6bc-4507-8f5a-15d6bf7a83b0/restaurant-5.png)
+![restaurant-5](https://user-images.githubusercontent.com/33506590/169703828-2c54c77e-9bd7-4ea1-a9e7-257d2f1e2287.PNG)
 
 8-12.펀딩리뷰(리뷰 수정버튼클릭시)
-
-![restaurant-6.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ca7de03f-9772-4c57-9b01-eec6cbc1d7b3/restaurant-6.png)
+![restaurant-6](https://user-images.githubusercontent.com/33506590/169703831-aa93c5f9-d265-4cc1-9ad9-a6c1d7ba0b6d.PNG)
 
 8-13.펀딩리뷰 (리뷰 수정후)
 
-![restaurant-7.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5e20c6c3-9298-49a9-a378-b3fd97770140/restaurant-7.png)
+![restaurant-7](https://user-images.githubusercontent.com/33506590/169703833-2e904d04-e8de-4fad-8e63-6b7b0cc4560a.PNG)
 
 8-14.펀딩리뷰(여러개의 리뷰)
-
-![restaurant-8.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8fc31ce0-9fd8-425e-895b-78b36e751b85/restaurant-8.png)
+![restaurant-8](https://user-images.githubusercontent.com/33506590/169703834-c2ebfc55-0d5a-4526-8467-b7fbd36c0870.PNG)
 
 8-15.펀딩리뷰(리뷰 더보기 클릭시)
-
-![restaurant-9.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/da4ef732-9d92-46a6-857b-3e98161be08f/restaurant-9.png)
+![restaurant-9](https://user-images.githubusercontent.com/33506590/169703835-ec665a05-38b5-46b2-a82d-a99007d15bac.PNG)
 
 8-16. 펀딩리뷰( 리뷰 삭제 클릭시)
-
-![restaurant-10.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/62b6c402-9fdc-4267-8f17-5ba04c2bab09/restaurant-10.png)
+![restaurant-10](https://user-images.githubusercontent.com/33506590/169703837-2952263f-1bf9-41f2-bfbd-365ad5ee2d0f.PNG)
 
 8-17.펀딩리뷰 (리뷰 삭제 후)
-
-![restaurant-11.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ad40794b-dfc1-4add-8e29-759fffc85d61/restaurant-11.png)
+![restaurant-11](https://user-images.githubusercontent.com/33506590/169703838-769ef00a-dec6-4069-a7af-f57e94810dc0.PNG)
 
 8-18.마이페이지(쿠폰함/ 펀딩이 성공하여 펀딩에 참여한 회원에게 쿠폰을 나눠준 경우)
-
-![mypage-coupon-1.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c85e6706-727a-4fd2-bbb3-402ad53f00e9/mypage-coupon-1.png)
+![mypage-coupon-1](https://user-images.githubusercontent.com/33506590/169703882-e0fed83e-aa1c-4c6e-a44b-b03e604574fd.PNG)
 
 8-19.마이페이지(쿠폰함 / 쿠폰사용한 경우)
-
-![mypage-coupon-2.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/66a76490-ae80-41af-93df-ef138168deb3/mypage-coupon-2.png)
+![mypage-coupon-2](https://user-images.githubusercontent.com/33506590/169703884-b48d2a72-610c-45eb-aca6-aaba4f94dce3.PNG)
 
 9.마이페이지(구독성공)
-
-![mypage-subscription-1.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bef04912-c6cb-4347-9b60-9d1e6aadb49a/mypage-subscription-1.png)
+![mypage-subscription-1](https://user-images.githubusercontent.com/33506590/169703889-06f5c4be-ae80-4825-bac3-7caac6696313.PNG)
 
 9-1.마이페이지(구독실패/돈 부족)
-
-![mypage-subscription-2.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f5f66c93-d5c8-4a50-b85e-31ae8fc09828/mypage-subscription-2.png)
+![mypage-subscription-2](https://user-images.githubusercontent.com/33506590/169703891-9c2c81d6-7de3-49c2-833e-44c669f370fa.PNG)
 
 10.FAQ(공지 리스트)
-
-![faq-1.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2fa91ae7-9f6a-4aa0-bf69-4126522b50bf/faq-1.png)
+![faq-1](https://user-images.githubusercontent.com/33506590/169703896-3ffefb4e-3621-41b3-bbb5-d62b9443fa3c.PNG)
 
 10-1.FAQ(상세글/ 운영자일시)
-
-![faq-2.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7de7cd15-d694-4c8f-b1a8-61ed7748cb30/faq-2.png)
+![faq-2](https://user-images.githubusercontent.com/33506590/169703897-021aefef-1fde-4fa3-9d26-f14c89e46c46.PNG)
 
 10-2.FAQ(상세글/ 일반사용자일시)
-
-![faq-3.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/64c3c2a1-1784-4cbb-af98-de6195f07b1d/faq-3.png)
+![faq-3](https://user-images.githubusercontent.com/33506590/169703898-ad60d27b-183e-4abf-8b2a-c05b5f71c89f.PNG)
 
 10-3.FAQ(일반 사용자가 글쓰기를 클릭시)
 
-![faq-4.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9f3ec779-7d18-4163-8362-9fbe561b086a/faq-4.png)
+![faq-4](https://user-images.githubusercontent.com/33506590/169703901-a8d9d1d4-d99d-453c-a4a1-78a2e13661df.PNG)
 
 11.펀딩 검색
-
-![search-1.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/90a8028c-d1ff-4b52-b06a-5ba67effb696/search-1.png)
+![search-1](https://user-images.githubusercontent.com/33506590/169703909-55757586-2e28-4e2f-aefc-eb3e967b6bfb.PNG)
 
 11-1.펀딩 검색(일치하는 펀딩(=가게)가 없을경우)
 
-![search-2.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7d0d326c-8c8a-4d9b-bfe8-0688501b149c/search-2.png)
+![search-2](https://user-images.githubusercontent.com/33506590/169703910-61dee3e3-842c-471e-a304-e22581774b2a.PNG)
 
 11-2.펀딩 검색(일치하는 펀딩(=가게)가 있는경우)
 
-![search-3.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/be728b72-9737-4e8b-a2d0-3aaa445e773f/search-3.png)
+![search-3](https://user-images.githubusercontent.com/33506590/169703914-806ec9a7-2971-45b0-9366-50730f659be9.PNG)
 
 12.ADMIN페이지
 
-![admin-1.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a783ae06-f863-4764-b7fb-d56f921fd11e/admin-1.png)
+![admin-1](https://user-images.githubusercontent.com/33506590/169703927-30066f7e-3934-40dd-a587-d748376c24e8.PNG)
 
 12-1.펀딩등록
 
-![admin-2.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f872fa46-f200-4143-bbd3-17dd4225d6d9/admin-2.png)
+![admin-2](https://user-images.githubusercontent.com/33506590/169703931-67ea64bc-68df-4071-8b4e-cec9aa1a2199.PNG)
 
 12-2.펀딩등록
 
-![admin-3.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/76aa665a-0e15-47d5-8b56-9892e8231a66/admin-3.png)
+![admin-3](https://user-images.githubusercontent.com/33506590/169703934-b21684a1-336f-4dd2-a9a0-613a6cb801c1.PNG)
 
 12-3.FAQ쓰기
 
-![admin-4.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a3412705-d5a1-4c5e-8f93-a6ac6be12fe4/admin-4.png)
+![admin-4](https://user-images.githubusercontent.com/33506590/169703936-c2b2cf4b-e240-4b66-ac5d-f62ae5e76e80.PNG)
 
 12-4.ADMIN페이지(일반 유저가 접속시도한 경우)
-
-![home-2.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7f2e7b48-a50f-4f79-99b2-27eb7e70c9f0/home-2.png)
-
+![home-2](https://user-images.githubusercontent.com/33506590/169703941-d89adbc6-ad69-4391-9561-323e19682be9.PNG)
 # 7.회고
 
 -배운점이 많은 프로젝트였습니다. 이때까지 공부한 spring,jpa,queryDsl,thymeleaf 등 다양한 기술을 직접 사용해보면서 많은 에러를 겪기도 하고 하나하나 완성되가는 완성물을 보가면서
