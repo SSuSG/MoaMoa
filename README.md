@@ -207,6 +207,15 @@ https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9
 
 
 3-1.아이디중복체크(중복일시)
+
+
+
+
+
+
+
+
+
 ![join-2](https://user-images.githubusercontent.com/33506590/169703554-fa53ea5a-60b5-4dc2-8dbf-c12120f3f5b9.PNG)
 
 
@@ -219,6 +228,15 @@ https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9
 
 
 3-2. 아이디 중복체크(중복이 아닐시)
+
+
+
+
+
+
+
+
+
 ![join-3](https://user-images.githubusercontent.com/33506590/169703555-f55427f1-6a23-4092-97dc-a8a27487d296.PNG)
 
 
@@ -231,6 +249,15 @@ https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9
 
 
 3-3. 비밀번호 확인(일치하지 않을시)
+
+
+
+
+
+
+
+
+
 ![join-4](https://user-images.githubusercontent.com/33506590/169703558-bbc6df0e-6ccf-48b2-b91d-d47e508b8729.PNG)
 
 
@@ -243,6 +270,15 @@ https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9
 
 
 3-4.비밀번호 확인(일치할 시)
+
+
+
+
+
+
+
+
+
 ![join-5](https://user-images.githubusercontent.com/33506590/169703560-ffea202c-3e6f-494e-89d0-e334f5b79e6b.PNG)
 
 
@@ -255,6 +291,15 @@ https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9
 
 
 3-5. 회원가입 성공시
+
+
+
+
+
+
+
+
+
 ![join-6](https://user-images.githubusercontent.com/33506590/169703568-25b12fd7-e302-4dcd-a94d-0d29bfff1c99.PNG)
 
 
@@ -267,6 +312,15 @@ https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9
 
 
 4-1.틀린 아이디 또는 비밀번호를 입력할시
+
+
+
+
+
+
+
+
+
 ![Login-2](https://user-images.githubusercontent.com/33506590/169703633-5a46356a-b512-4888-9a02-1091c82e6743.PNG)
 
 
