@@ -143,7 +143,7 @@
 
 # 4.DB설계
 
-![MoaMoaDB.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cca5e064-5adf-4613-8f83-0a01b7bc9e02/MoaMoaDB.png)
+![MoaMoaDB](https://user-images.githubusercontent.com/33506590/169702974-a48c7a31-a569-4f74-97e5-b4d18cb415c4.PNG)
 
 # 5.API명세서
 
