@@ -146,8 +146,8 @@
 ![MoaMoaDB](https://user-images.githubusercontent.com/33506590/169702974-a48c7a31-a569-4f74-97e5-b4d18cb415c4.PNG)
 
 # 5.API명세서
-
-https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9d117f5d73
+![11](https://user-images.githubusercontent.com/33506590/169704819-c5f8dffe-2a7c-4b98-afc9-f36915b0e84f.PNG)
+![12](https://user-images.githubusercontent.com/33506590/169704824-386ee534-297b-4fee-b05e-d9c4749659e0.PNG)
 
 # 6.프로젝트 완성본
 
