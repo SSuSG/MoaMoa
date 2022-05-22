@@ -176,6 +176,25 @@ https://www.notion.so/b9a15d8a03a64703914077a52d1df37a?v=554914601dd14f77a0e17b9
 
 
 3.회원가입
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ![join-1](https://user-images.githubusercontent.com/33506590/169703551-53e6969e-4485-41e7-9667-ffc9fa6fb37a.PNG)
 
 
